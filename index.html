@@ -9,13 +9,12 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#FFFAB0;--surface:#f5f09a;--text:#1a1a1a;--muted:#999;--border:#e8e090;
-  --toolbar-bg:#FFFAB0;--toolbar-border:#e8e090;--toolbar-shadow:0 2px 12px rgba(0,0,0,0.10);
-  --btn-hover:#f5f09a;--accent:#1a1a1a;--sidebar-bg:#faf6a8;
+  --bg:#FAFAFA;--surface:#f0f0f0;--text:#1a1a1a;--muted:#999;--border:#e0e0e0;
+  --toolbar-bg:#FAFAFA;--toolbar-border:#e0e0e0;--toolbar-shadow:0 2px 12px rgba(0,0,0,0.10);
+  --btn-hover:#ebebeb;--accent:#1a1a1a;--sidebar-bg:#f5f5f5;
   --font-ui:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
   --topbar-h:48px;--status-h:32px;
 }
-
 body.dark{
   --bg:#141414;--surface:#1e1e1c;--text:#e8e8e4;--muted:#666;--border:#2e2e2c;
   --toolbar-bg:#1e1e1c;--toolbar-border:#333;--toolbar-shadow:0 2px 16px rgba(0,0,0,0.4);
@@ -24,7 +23,75 @@ body.dark{
 html,body{height:100%;overflow:hidden}
 body{display:flex;flex-direction:column;background:var(--bg);color:var(--text);font-family:var(--font-ui);transition:background .2s,color .2s}
 
-/* TOPBAR */
+/* ── HOME SCREEN ── */
+#home{
+  position:fixed;inset:0;background:var(--bg);z-index:500;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;transition:background .2s;
+}
+#home.hidden{display:none}
+#home-inner{width:100%;max-width:560px}
+#home h1{font-size:22px;font-weight:600;margin-bottom:4px;letter-spacing:-.01em}
+#home p{font-size:13px;color:var(--muted);margin-bottom:28px}
+
+.home-section-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+
+/* new doc + upload row */
+.home-actions{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.home-btn{
+  flex:1;min-width:120px;padding:12px 16px;border-radius:10px;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--text);font-family:var(--font-ui);font-size:13px;
+  cursor:pointer;display:flex;align-items:center;gap:8px;
+  transition:background .15s;-webkit-tap-highlight-color:transparent;
+}
+.home-btn:hover,.home-btn:active{background:var(--btn-hover)}
+.home-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.home-btn.primary:hover{opacity:.85}
+.home-btn svg{flex-shrink:0}
+
+/* local docs list */
+#local-docs{margin-bottom:24px}
+#local-list{display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto}
+.doc-item{
+  display:flex;align-items:center;gap:10px;padding:9px 12px;
+  border-radius:8px;border:1px solid var(--border);background:var(--surface);
+  cursor:pointer;transition:background .12s;-webkit-tap-highlight-color:transparent;
+}
+.doc-item:hover,.doc-item:active{background:var(--btn-hover)}
+.doc-item-info{flex:1;min-width:0}
+.doc-item-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.doc-item-meta{font-size:11px;color:var(--muted);margin-top:1px}
+.doc-item-del{
+  background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;
+  border-radius:5px;flex-shrink:0;line-height:1;font-size:15px;
+  -webkit-tap-highlight-color:transparent;
+}
+.doc-item-del:hover{color:var(--text);background:var(--btn-hover)}
+.home-empty{font-size:13px;color:var(--muted);padding:12px;text-align:center;border:1px dashed var(--border);border-radius:8px}
+
+/* preloaded */
+#preloaded-docs .pre-list{display:flex;flex-direction:column;gap:4px}
+.pre-item{
+  display:flex;align-items:center;gap:10px;padding:9px 12px;
+  border-radius:8px;border:1px solid var(--border);background:var(--surface);
+  cursor:pointer;transition:background .12s;-webkit-tap-highlight-color:transparent;
+}
+.pre-item:hover,.pre-item:active{background:var(--btn-hover)}
+.pre-item-icon{font-size:16px;flex-shrink:0}
+.pre-item-info{flex:1}
+.pre-item-name{font-size:13px;font-weight:500}
+.pre-item-desc{font-size:11px;color:var(--muted);margin-top:1px}
+
+/* home top-right */
+#home-topright{position:absolute;top:14px;right:16px;display:flex;gap:6px}
+.home-icon-btn{
+  background:none;border:none;color:var(--muted);cursor:pointer;padding:6px;
+  border-radius:8px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent;
+}
+.home-icon-btn:hover{background:var(--btn-hover);color:var(--text)}
+
+/* ── EDITOR ── */
 #topbar{
   display:flex;align-items:center;justify-content:space-between;
   padding:0 12px;height:var(--topbar-h);border-bottom:1px solid var(--border);
@@ -54,25 +121,23 @@ select#fontsel:hover{background:var(--btn-hover);color:var(--text)}
 }
 #topbar-reveal:hover{background:var(--muted)}
 
-/* MAIN */
 #main{display:flex;flex:1;overflow:hidden;position:relative}
-
 #editor-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;justify-content:center;position:relative}
 #line-numbers{
   position:absolute;left:0;top:0;bottom:0;width:40px;
   padding:40px 0 100px;display:none;flex-direction:column;
   align-items:flex-end;gap:0;pointer-events:none;
   font-size:12px;line-height:1.75;color:var(--muted);
-  font-family:'Courier New',Courier,monospace;
-  user-select:none;
+  font-family:'Courier New',Courier,monospace;user-select:none;
 }
 @media(min-width:600px){#line-numbers{padding-top:60px;padding-bottom:120px}}
 #line-numbers.visible{display:flex}
-#line-numbers span{display:block;height:calc(17px * 1.75);padding-right:10px;opacity:.5}
+#line-numbers span{display:block;height:calc(17px * 1.75);padding-right:10px;opacity:.4;transition:opacity .1s,color .1s}
+#line-numbers span.active{opacity:1;color:var(--accent)}
 body.font-mono #line-numbers span{height:calc(15px * 1.8)}
-/* shift editor right when line numbers visible */
 #editor-wrap.with-lines #editor{padding-left:52px}
 @media(min-width:600px){#editor-wrap.with-lines #editor{padding-left:60px}}
+
 #editor{
   width:100%;max-width:720px;min-height:100%;
   padding:40px 20px 100px;outline:none;
@@ -101,14 +166,12 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 #editor em{font-style:italic}
 #editor hr{border:none;border-top:1px solid var(--border);margin:1.5em 0}
 
-/* SIDEBAR */
 #sidebar{
   width:176px;flex-shrink:0;border-left:1px solid var(--border);
   background:var(--sidebar-bg);padding:12px 10px;display:none;flex-direction:column;gap:2px;
   overflow-y:auto;-webkit-overflow-scrolling:touch;order:2;
 }
 #sidebar.open{display:flex}
-/* Mobile: sidebar becomes bottom sheet */
 @media(max-width:599px){
   #sidebar{
     position:fixed;bottom:var(--status-h);left:0;right:0;width:100%;
@@ -130,7 +193,6 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 .sb-btn:hover,.sb-btn:active{background:var(--btn-hover)}
 .sb-btn .icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--muted);flex-shrink:0}
 
-/* FLOATING TOOLBAR */
 #toolbar{
   position:fixed;background:var(--toolbar-bg);border:1px solid var(--toolbar-border);
   border-radius:8px;box-shadow:var(--toolbar-shadow);
@@ -147,7 +209,6 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 .tb-sep{width:1px;height:18px;background:var(--border);margin:0 2px;flex-shrink:0}
 .tb-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-/* MODAL */
 #modal-overlay{
   position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:2000;
   display:none;align-items:flex-end;justify-content:center;
@@ -173,17 +234,10 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 .modal-btn:hover,.modal-btn:active{background:var(--btn-hover)}
 .modal-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
 .modal-btn.primary:hover{opacity:.85}
-.modal-close{
-  position:absolute;top:14px;right:14px;background:none;border:none;
-  cursor:pointer;color:var(--muted);font-size:20px;line-height:1;padding:4px;
-}
+.modal-close{position:absolute;top:14px;right:14px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:20px;line-height:1;padding:4px}
 .modal-step{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
-.modal-step-num{
-  width:22px;height:22px;border-radius:50%;background:var(--surface);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;
-}
+.modal-step-num{width:22px;height:22px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 
-/* TOAST */
 #toast{
   position:fixed;bottom:48px;left:50%;transform:translateX(-50%) translateY(12px);
   background:var(--accent);color:var(--bg);padding:9px 18px;border-radius:10px;
@@ -191,7 +245,6 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 }
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* STATUS BAR */
 #status{
   font-size:11px;color:var(--muted);padding:0 16px;height:var(--status-h);
   border-top:1px solid var(--border);background:var(--bg);flex-shrink:0;
@@ -201,8 +254,76 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 </head>
 <body class="font-serif">
 
+<!-- HOME SCREEN -->
+<div id="home">
+  <div id="home-topright">
+    <button class="home-icon-btn" id="home-dark" title="Modo escuro">
+      <svg width="15" height="15" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M13 8.5A5.5 5.5 0 0 1 7.5 2a6 6 0 1 0 5.5 6.5z"/></svg>
+    </button>
+  </div>
+  <div id="home-inner">
+    <h1>Editor</h1>
+    <p>Onde você quer começar?</p>
+
+    <div class="home-actions">
+      <button class="home-btn primary" id="home-new">
+        <svg width="15" height="15" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
+        Novo documento
+      </button>
+      <button class="home-btn" id="home-upload-btn">
+        <svg width="15" height="15" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 11V3M5 6l3-3 3 3M3 13h10"/></svg>
+        Abrir arquivo
+      </button>
+      <input type="file" id="home-file-input" accept=".md,.markdown,.txt,.html" style="display:none">
+    </div>
+
+    <div id="local-docs">
+      <div class="home-section-label">Documentos salvos</div>
+      <div id="local-list"></div>
+    </div>
+
+    <div id="preloaded-docs">
+      <div class="home-section-label">Modelos</div>
+      <div class="pre-list">
+        <div class="pre-item" data-pre="blank">
+          <span class="pre-item-icon">📄</span>
+          <div class="pre-item-info">
+            <div class="pre-item-name">Em branco</div>
+            <div class="pre-item-desc">Documento vazio</div>
+          </div>
+        </div>
+        <div class="pre-item" data-pre="notes">
+          <span class="pre-item-icon">📝</span>
+          <div class="pre-item-info">
+            <div class="pre-item-name">Bloco de notas</div>
+            <div class="pre-item-desc">Anotações rápidas com estrutura simples</div>
+          </div>
+        </div>
+        <div class="pre-item" data-pre="markdown">
+          <span class="pre-item-icon">✍️</span>
+          <div class="pre-item-info">
+            <div class="pre-item-name">Guia Markdown</div>
+            <div class="pre-item-desc">Referência dos principais elementos</div>
+          </div>
+        </div>
+        <div class="pre-item" data-pre="letter">
+          <span class="pre-item-icon">✉️</span>
+          <div class="pre-item-info">
+            <div class="pre-item-name">Carta / Ofício</div>
+            <div class="pre-item-desc">Modelo de correspondência formal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDITOR -->
 <div id="topbar">
   <div id="topbar-left">
+    <button class="top-btn" id="btnHome" title="Início">
+      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M2 7l6-5 6 5v7H10v-4H6v4H2z"/></svg>
+    </button>
     <select id="fontsel" title="Fonte">
       <option value="font-serif">Serif</option>
       <option value="font-sans">Sans (Anthropic)</option>
@@ -215,7 +336,11 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
       <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 11V3M5 6l3-3 3 3M3 13h10"/></svg>
       <span>Abrir</span>
     </button>
-    <input type="file" id="fileInput" accept=".md,.markdown,.txt" style="display:none">
+    <input type="file" id="fileInput" accept=".md,.markdown,.txt,.html" style="display:none">
+    <button class="top-btn" id="btnSave" title="Salvar localmente">
+      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M3 3h8l2 2v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M5 3v4h6V3M5 13v-4h6v4"/></svg>
+      <span>Salvar</span>
+    </button>
     <button class="top-btn" id="btnDownload" title="Baixar">
       <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 3v8M5 8l3 3 3-3M3 13h10"/></svg>
       <span>Baixar</span>
@@ -224,14 +349,14 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 10h8M8 14h5"/><path d="M14 2v5h6"/></svg>
       <span>Docs</span>
     </button>
+    <button class="top-btn" id="lineToggle" title="Números de linha">
+      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="6" y1="4" x2="14" y2="4"/><line x1="6" y1="8" x2="14" y2="8"/><line x1="6" y1="12" x2="14" y2="12"/><line x1="2" y1="4" x2="3" y2="4"/><line x1="2" y1="8" x2="3" y2="8"/><line x1="2" y1="12" x2="3" y2="12"/></svg>
+    </button>
     <button class="top-btn" id="darkToggle" title="Modo escuro">
       <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M13 8.5A5.5 5.5 0 0 1 7.5 2a6 6 0 1 0 5.5 6.5z"/></svg>
     </button>
     <button class="top-btn" id="sidebarToggle" title="Ferramentas">
       <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="2" y1="4" x2="14" y2="4"/><line x1="2" y1="8" x2="14" y2="8"/><line x1="2" y1="12" x2="14" y2="12"/></svg>
-    </button>
-    <button class="top-btn" id="lineToggle" title="Números de linha">
-      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="6" y1="4" x2="14" y2="4"/><line x1="6" y1="8" x2="14" y2="8"/><line x1="6" y1="12" x2="14" y2="12"/><line x1="2" y1="4" x2="3" y2="4"/><line x1="2" y1="8" x2="3" y2="8"/><line x1="2" y1="12" x2="3" y2="12"/></svg>
     </button>
     <button class="top-btn" id="topbarToggle" title="Ocultar barra">
       <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><polyline points="4 10 8 6 12 10"/></svg>
@@ -243,7 +368,7 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 <div id="main">
   <div id="editor-wrap">
     <div id="line-numbers"></div>
-  <div id="editor" contenteditable="true" spellcheck="true" data-placeholder="Comece a escrever…"></div>
+    <div id="editor" contenteditable="true" spellcheck="true" data-placeholder="Comece a escrever…"></div>
   </div>
   <div id="sidebar">
     <div class="sidebar-label">Formatação</div>
@@ -295,9 +420,7 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
     <div id="modal-content"></div>
   </div>
 </div>
-
 <div id="toast"></div>
-
 <div id="status">
   <span id="statusLeft">Pronto</span>
   <span id="wordcount">0 palavras</span>
@@ -305,6 +428,40 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 </div>
 
 <script>
+/* ── PRELOADED TEMPLATES ── */
+const TEMPLATES={
+  blank:{title:'Sem título',html:''},
+  notes:{title:'Notas',html:`<h1>Notas</h1><h2>Ideias</h2><p></p><h2>Tarefas</h2><ul><li></li></ul><h2>Referências</h2><p></p>`},
+  markdown:{title:'Guia Markdown',html:`<h1>Guia Markdown</h1><p>Uma referência rápida dos elementos mais comuns.</p><h2>Títulos</h2><pre><code># H1  ## H2  ### H3</code></pre><h2>Ênfase</h2><pre><code>**negrito**  *itálico*  ~~riscado~~</code></pre><h2>Listas</h2><pre><code>- item\n- item\n\n1. item\n2. item</code></pre><h2>Links e código</h2><pre><code>[texto](url)\n\`código inline\`</code></pre><h2>Citação</h2><blockquote>Texto citado</blockquote><hr><p>Edite à vontade!</p>`},
+  letter:{title:'Carta',html:`<p>[Cidade], [data]</p><p><br></p><p><strong>A/C:</strong> [Nome do destinatário]<br>[Cargo]<br>[Organização]</p><p><br></p><p>Prezado(a) [Nome],</p><p><br></p><p>Escrevo para [motivo da correspondência].</p><p><br></p><p>[Corpo da carta]</p><p><br></p><p>Atenciosamente,</p><p><br></p><p>[Seu nome]<br>[Cargo / Contato]</p>`}
+};
+
+/* ── LOCAL STORAGE DOCS ── */
+const LS_PREFIX='editor_doc_';
+const LS_LIST='editor_doc_list';
+
+function getDocList(){try{return JSON.parse(localStorage.getItem(LS_LIST)||'[]');}catch(e){return[];}}
+function saveDocList(l){try{localStorage.setItem(LS_LIST,JSON.stringify(l));}catch(e){}}
+
+function saveDoc(id,name,html){
+  try{localStorage.setItem(LS_PREFIX+id,JSON.stringify({name,html,updated:Date.now()}));}catch(e){}
+  const list=getDocList();
+  if(!list.find(d=>d.id===id))list.unshift({id,name});
+  else{const i=list.findIndex(d=>d.id===id);list[i].name=name;}
+  saveDocList(list);
+}
+function loadDoc(id){try{const d=localStorage.getItem(LS_PREFIX+id);return d?JSON.parse(d):null;}catch(e){return null;}}
+function deleteDoc(id){
+  try{localStorage.removeItem(LS_PREFIX+id);}catch(e){}
+  saveDocList(getDocList().filter(d=>d.id!==id));
+}
+function genId(){return'doc_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);}
+
+/* ── STATE ── */
+let currentDocId=null;
+let mdMode=false,saveTimer=null,showLines=false;
+
+/* ── ELEMENTS ── */
 const editor=document.getElementById('editor');
 const toolbar=document.getElementById('toolbar');
 const sidebar=document.getElementById('sidebar');
@@ -317,44 +474,146 @@ const modalContent=document.getElementById('modal-content');
 const toast=document.getElementById('toast');
 const topbar=document.getElementById('topbar');
 const topbarReveal=document.getElementById('topbar-reveal');
+const homeEl=document.getElementById('home');
+const lineNumbers=document.getElementById('line-numbers');
+const editorWrap=document.getElementById('editor-wrap');
 
-let mdMode=false,saveTimer=null;
-
-function showToast(msg,dur=2200){
-  toast.textContent=msg;toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'),dur);
-}
-function openModal(html){modalContent.innerHTML=html;modalOverlay.classList.add('open')}
-function closeModal(){modalOverlay.classList.remove('open')}
+/* ── UTILS ── */
+function showToast(msg,dur=2200){toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),dur);}
+function openModal(html){modalContent.innerHTML=html;modalOverlay.classList.add('open');}
+function closeModal(){modalOverlay.classList.remove('open');}
 document.getElementById('modal-close-btn').addEventListener('click',closeModal);
-modalOverlay.addEventListener('click',e=>{if(e.target===modalOverlay)closeModal()});
+modalOverlay.addEventListener('click',e=>{if(e.target===modalOverlay)closeModal();});
 
+/* ── THEME ── */
+function applyTheme(){
+  try{if(localStorage.getItem('dark_mode')==='1')body.classList.add('dark');}catch(e){}
+}
+applyTheme();
+
+function toggleDark(){
+  body.classList.toggle('dark');
+  try{localStorage.setItem('dark_mode',body.classList.contains('dark')?'1':'0');}catch(e){}
+}
+document.getElementById('darkToggle').addEventListener('click',toggleDark);
+document.getElementById('home-dark').addEventListener('click',toggleDark);
+
+/* ── HOME ── */
+function renderLocalList(){
+  const list=getDocList();
+  const el=document.getElementById('local-list');
+  if(list.length===0){el.innerHTML='<div class="home-empty">Nenhum documento salvo ainda</div>';return;}
+  el.innerHTML=list.map(d=>{
+    const doc=loadDoc(d.id);
+    const date=doc?new Date(doc.updated).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+    return`<div class="doc-item" data-id="${d.id}">
+      <svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.6" style="flex-shrink:0;opacity:.5"><rect x="3" y="1" width="10" height="14" rx="1.5"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="9" y2="8"/></svg>
+      <div class="doc-item-info">
+        <div class="doc-item-name">${d.name||'Sem título'}</div>
+        <div class="doc-item-meta">${date}</div>
+      </div>
+      <button class="doc-item-del" data-del="${d.id}" title="Excluir">×</button>
+    </div>`;
+  }).join('');
+
+  el.querySelectorAll('.doc-item').forEach(item=>{
+    item.addEventListener('click',e=>{
+      if(e.target.closest('[data-del]'))return;
+      openLocalDoc(item.dataset.id);
+    });
+  });
+  el.querySelectorAll('[data-del]').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      if(confirm('Excluir este documento?')){deleteDoc(btn.dataset.del);renderLocalList();}
+    });
+  });
+}
+
+function showHome(){
+  homeEl.classList.remove('hidden');
+  renderLocalList();
+}
+function hideHome(){homeEl.classList.add('hidden');editor.focus();}
+
+function openLocalDoc(id){
+  const doc=loadDoc(id);
+  if(!doc)return;
+  currentDocId=id;
+  editor.innerHTML=doc.html||'';
+  mdMode=false;
+  document.getElementById('mdToggle').classList.remove('active');
+  countWords();hideHome();
+}
+
+function openTemplate(key){
+  const t=TEMPLATES[key];
+  currentDocId=null;
+  editor.innerHTML=t.html;
+  mdMode=false;
+  document.getElementById('mdToggle').classList.remove('active');
+  countWords();hideHome();
+}
+
+document.querySelectorAll('.pre-item').forEach(item=>{
+  item.addEventListener('click',()=>openTemplate(item.dataset.pre));
+});
+document.getElementById('home-new').addEventListener('click',()=>openTemplate('blank'));
+
+/* upload from home */
+document.getElementById('home-upload-btn').addEventListener('click',()=>document.getElementById('home-file-input').click());
+document.getElementById('home-file-input').addEventListener('change',function(){
+  const file=this.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const content=e.target.result;
+    const isHtml=file.name.endsWith('.html');
+    editor.innerHTML=isHtml?content:mdToHtml(content);
+    mdMode=false;currentDocId=null;
+    countWords();hideHome();showToast(`"${file.name}" aberto ✓`);
+  };
+  reader.readAsText(file,'UTF-8');this.value='';
+});
+
+document.getElementById('btnHome').addEventListener('click',showHome);
+showHome();
+
+/* ── EDITOR CORE ── */
 function countWords(){
   const txt=editor.innerText||'';
   const words=txt.trim().split(/\s+/).filter(w=>w.length>0);
   wordcount.textContent=words.length===0?'0 palavras':`${words.length} palavra${words.length!==1?'s':''}`;
   statusRight.textContent=`${txt.replace(/\s/g,'').length} car.`;
 }
+
 function autoSave(){
   clearTimeout(saveTimer);statusLeft.textContent='…';
   saveTimer=setTimeout(()=>{
+    if(currentDocId){
+      const doc=loadDoc(currentDocId);
+      saveDoc(currentDocId,doc?doc.name:'Sem título',editor.innerHTML);
+    }
     try{localStorage.setItem('editor_content',editor.innerHTML);}catch(e){}
     statusLeft.textContent='Salvo';
     setTimeout(()=>{statusLeft.textContent='Pronto';},1500);
   },800);
 }
 
-try{const s=localStorage.getItem('editor_content');if(s)editor.innerHTML=s;}catch(e){}
-countWords();
+/* manual save with name prompt */
+document.getElementById('btnSave').addEventListener('click',()=>{
+  const doc=currentDocId?loadDoc(currentDocId):null;
+  const name=prompt('Nome do documento:',doc?doc.name:'Sem título');
+  if(name===null)return;
+  if(!currentDocId)currentDocId=genId();
+  saveDoc(currentDocId,name||'Sem título',editor.innerHTML);
+  showToast(`"${name||'Sem título'}" salvo ✓`);
+});
 
 function execCmd(cmd){
   editor.focus();
   if(['h1','h2','h3'].includes(cmd)){document.execCommand('formatBlock',false,cmd);}
   else if(cmd==='blockquote'){document.execCommand('formatBlock',false,'blockquote');}
-  else if(cmd==='code'){
-    const sel=window.getSelection();
-    if(sel&&sel.toString()){const r=sel.getRangeAt(0);const c=document.createElement('code');try{r.surroundContents(c);}catch(e){}}
-  }
+  else if(cmd==='code'){const sel=window.getSelection();if(sel&&sel.toString()){const r=sel.getRangeAt(0);const c=document.createElement('code');try{r.surroundContents(c);}catch(e){}}}
   else if(cmd==='hr'){document.execCommand('insertHTML',false,'<hr>');}
   else if(cmd==='createLink'){const u=prompt('URL do link:');if(u)document.execCommand('createLink',false,u);}
   else{document.execCommand(cmd,false,null);}
@@ -366,6 +625,22 @@ document.querySelectorAll('[data-cmd]').forEach(btn=>{
   btn.addEventListener('touchend',e=>{e.preventDefault();execCmd(btn.dataset.cmd);});
 });
 
+/* keyboard shortcuts */
+editor.addEventListener('keydown',e=>{
+  const mod=e.ctrlKey||e.metaKey;
+  if(!mod)return;
+  const map={b:'bold',i:'italic',u:'underline'};
+  if(map[e.key]){e.preventDefault();execCmd(map[e.key]);return;}
+  if(e.key==='d'){e.preventDefault();execCmd('strikeThrough');return;}
+  if(e.key==='1'){e.preventDefault();execCmd('h1');return;}
+  if(e.key==='2'){e.preventDefault();execCmd('h2');return;}
+  if(e.key==='3'){e.preventDefault();execCmd('h3');return;}
+  if(e.key==='k'){e.preventDefault();execCmd('createLink');return;}
+  if(e.shiftKey&&e.key==='7'){e.preventDefault();execCmd('insertOrderedList');return;}
+  if(e.shiftKey&&e.key==='8'){e.preventDefault();execCmd('insertUnorderedList');return;}
+});
+
+/* floating toolbar */
 function positionToolbar(){
   const sel=window.getSelection();
   if(!sel||sel.rangeCount===0||sel.isCollapsed){toolbar.classList.remove('visible');return;}
@@ -386,33 +661,16 @@ document.addEventListener('selectionchange',()=>{
 });
 document.addEventListener('mouseup',()=>setTimeout(positionToolbar,10));
 document.addEventListener('touchend',()=>setTimeout(positionToolbar,200));
-editor.addEventListener('keyup',()=>{countWords();autoSave();});
 
-editor.addEventListener('keydown',e=>{
-  const mod=e.ctrlKey||e.metaKey;
-  if(!mod)return;
-  const map={b:'bold',i:'italic',u:'underline'};
-  if(map[e.key]){e.preventDefault();execCmd(map[e.key]);return;}
-  if(e.key==='d'){e.preventDefault();execCmd('strikeThrough');return;}
-  if(e.key==='1'){e.preventDefault();execCmd('h1');return;}
-  if(e.key==='2'){e.preventDefault();execCmd('h2');return;}
-  if(e.key==='3'){e.preventDefault();execCmd('h3');return;}
-  if(e.key==='k'){e.preventDefault();execCmd('createLink');return;}
-  if(e.shiftKey&&e.key==='7'){e.preventDefault();execCmd('insertOrderedList');return;}
-  if(e.shiftKey&&e.key==='8'){e.preventDefault();execCmd('insertUnorderedList');return;}
-});
+editor.addEventListener('keyup',()=>{countWords();autoSave();updateLineNumbers();});
 editor.addEventListener('input',()=>{countWords();autoSave();});
+editor.addEventListener('click',highlightActiveLine);
+editor.addEventListener('focus',highlightActiveLine);
 
-document.getElementById('darkToggle').addEventListener('click',()=>{
-  body.classList.toggle('dark');
-  try{localStorage.setItem('dark_mode',body.classList.contains('dark')?'1':'0');}catch(e){}
-});
-try{if(localStorage.getItem('dark_mode')==='1')body.classList.add('dark');}catch(e){}
+/* sidebar */
+document.getElementById('sidebarToggle').addEventListener('click',function(){sidebar.classList.toggle('open');this.classList.toggle('active');});
 
-document.getElementById('sidebarToggle').addEventListener('click',function(){
-  sidebar.classList.toggle('open');this.classList.toggle('active');
-});
-
+/* font */
 document.getElementById('fontsel').addEventListener('change',function(){
   body.className=body.className.replace(/font-\w+/g,'').trim();
   body.classList.add(this.value);
@@ -420,74 +678,65 @@ document.getElementById('fontsel').addEventListener('change',function(){
 });
 try{const f=localStorage.getItem('editor_font');if(f){body.className=body.className.replace(/font-\w+/g,'').trim();body.classList.add(f);document.getElementById('fontsel').value=f;}}catch(e){}
 
+/* markdown toggle */
 document.getElementById('mdToggle').addEventListener('click',function(){
   mdMode=!mdMode;this.classList.toggle('active',mdMode);
-  if(mdMode){editor.innerText=htmlToMd(editor.innerHTML);}
-  else{editor.innerHTML=mdToHtml(editor.innerText);}
+  if(mdMode){editor.innerText=htmlToMd(editor.innerHTML);}else{editor.innerHTML=mdToHtml(editor.innerText);}
   countWords();
 });
 
-/* LINE NUMBERS */
-const lineNumbers=document.getElementById('line-numbers');
-const editorWrap=document.getElementById('editor-wrap');
-let showLines=false;
+/* topbar hide/show */
+document.getElementById('topbarToggle').addEventListener('click',()=>{topbar.style.display='none';topbarReveal.style.display='block';});
+topbarReveal.addEventListener('click',()=>{topbar.style.display='';topbarReveal.style.display='none';});
 
-function updateLineNumbers(){
-  if(!showLines)return;
-  const lines=editor.innerText.split('\n');
-  const count=Math.max(lines.length,1);
-  lineNumbers.innerHTML=Array.from({length:count},(_,i)=>`<span>${i+1}</span>`).join('');
-}
-
-document.getElementById('lineToggle').addEventListener('click',function(){
-  showLines=!showLines;
-  this.classList.toggle('active',showLines);
-  lineNumbers.classList.toggle('visible',showLines);
-  editorWrap.classList.toggle('with-lines',showLines);
-  if(showLines)updateLineNumbers();
-});
-
-editor.addEventListener('input',()=>{countWords();autoSave();updateLineNumbers();});
-editor.addEventListener('keyup',()=>{countWords();autoSave();updateLineNumbers();});
-
-document.getElementById('topbarToggle').addEventListener('click',()=>{
-  topbar.style.display='none';topbarReveal.style.display='block';
-});
-topbarReveal.addEventListener('click',()=>{
-  topbar.style.display='';topbarReveal.style.display='none';
-});
-
-/* UPLOAD */
+/* upload in editor */
 document.getElementById('btnUpload').addEventListener('click',()=>document.getElementById('fileInput').click());
 document.getElementById('fileInput').addEventListener('change',function(){
   const file=this.files[0];if(!file)return;
   const reader=new FileReader();
   reader.onload=e=>{
-    const md=e.target.result;
-    if(mdMode){editor.innerText=md;}else{editor.innerHTML=mdToHtml(md);}
-    countWords();autoSave();showToast(`"${file.name}" aberto ✓`);
+    const isHtml=file.name.endsWith('.html');
+    if(mdMode){editor.innerText=e.target.result;}else{editor.innerHTML=isHtml?e.target.result:mdToHtml(e.target.result);}
+    currentDocId=null;countWords();autoSave();showToast(`"${file.name}" aberto ✓`);
   };
   reader.readAsText(file,'UTF-8');this.value='';
 });
 
-/* MD CONVERSIONS */
+/* line numbers */
+function updateLineNumbers(){
+  if(!showLines)return;
+  const lines=editor.innerText.split('\n');
+  const count=Math.max(lines.length,1);
+  lineNumbers.innerHTML=Array.from({length:count},(_,i)=>`<span>${i+1}</span>`).join('');
+  highlightActiveLine();
+}
+function highlightActiveLine(){
+  if(!showLines)return;
+  const sel=window.getSelection();
+  if(!sel||!editor.contains(sel.anchorNode))return;
+  const range=sel.getRangeAt(0).cloneRange();range.collapse(true);
+  const rect=range.getBoundingClientRect();
+  const editorRect=editor.getBoundingClientRect();
+  const lineH=parseInt(getComputedStyle(editor).lineHeight)||Math.round(17*1.75);
+  const lineIdx=Math.max(0,Math.floor((rect.top-editorRect.top)/lineH));
+  lineNumbers.querySelectorAll('span').forEach((s,i)=>s.classList.toggle('active',i===lineIdx));
+}
+document.getElementById('lineToggle').addEventListener('click',function(){
+  showLines=!showLines;this.classList.toggle('active',showLines);
+  lineNumbers.classList.toggle('visible',showLines);editorWrap.classList.toggle('with-lines',showLines);
+  if(showLines)updateLineNumbers();
+});
+
+/* ── MD CONVERSIONS ── */
 function mdToHtml(md){
   if(!md)return'';
   let h=md.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  h=h.replace(/^#{3} (.+)$/gm,'<h3>$1</h3>');
-  h=h.replace(/^#{2} (.+)$/gm,'<h2>$1</h2>');
-  h=h.replace(/^# (.+)$/gm,'<h1>$1</h1>');
-  h=h.replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>');
-  h=h.replace(/^---+$/gm,'<hr>');
-  h=h.replace(/```([\s\S]*?)```/g,'<pre><code>$1</code></pre>');
-  h=h.replace(/`([^`]+)`/g,'<code>$1</code>');
-  h=h.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>');
-  h=h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-  h=h.replace(/__(.+?)__/g,'<strong>$1</strong>');
-  h=h.replace(/\*(.+?)\*/g,'<em>$1</em>');
-  h=h.replace(/_(.+?)_/g,'<em>$1</em>');
-  h=h.replace(/~~(.+?)~~/g,'<s>$1</s>');
-  h=h.replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2">$1</a>');
+  h=h.replace(/^#{3} (.+)$/gm,'<h3>$1</h3>');h=h.replace(/^#{2} (.+)$/gm,'<h2>$1</h2>');h=h.replace(/^# (.+)$/gm,'<h1>$1</h1>');
+  h=h.replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>');h=h.replace(/^---+$/gm,'<hr>');
+  h=h.replace(/```([\s\S]*?)```/g,'<pre><code>$1</code></pre>');h=h.replace(/`([^`]+)`/g,'<code>$1</code>');
+  h=h.replace(/\*\*\*(.+?)\*\*\*/g,'<strong><em>$1</em></strong>');h=h.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  h=h.replace(/__(.+?)__/g,'<strong>$1</strong>');h=h.replace(/\*(.+?)\*/g,'<em>$1</em>');h=h.replace(/_(.+?)_/g,'<em>$1</em>');
+  h=h.replace(/~~(.+?)~~/g,'<s>$1</s>');h=h.replace(/\[(.+?)\]\((.+?)\)/g,'<a href="$2">$1</a>');
   const lines=h.split('\n');const out=[];let inUl=false,inOl=false;
   for(let l of lines){
     if(/^<(h[123]|blockquote|hr|pre)/.test(l)){if(inUl){out.push('</ul>');inUl=false;}if(inOl){out.push('</ol>');inOl=false;}out.push(l);}
@@ -507,18 +756,15 @@ function htmlToMd(html){
     if(tag==='h1')return'# '+inner+'\n';if(tag==='h2')return'## '+inner+'\n';if(tag==='h3')return'### '+inner+'\n';
     if(tag==='strong'||tag==='b')return'**'+inner+'**';if(tag==='em'||tag==='i')return'*'+inner+'*';
     if(tag==='s')return'~~'+inner+'~~';if(tag==='code')return'`'+inner+'`';
-    if(tag==='pre')return'```\n'+n.innerText+'\n```\n';
-    if(tag==='blockquote')return'> '+inner+'\n';
-    if(tag==='a')return'['+inner+']('+n.href+')';
-    if(tag==='li')return'- '+inner+'\n';if(tag==='ul'||tag==='ol')return inner+'\n';
-    if(tag==='hr')return'---\n';if(tag==='br')return'\n';
-    if(tag==='p'||tag==='div')return inner+'\n';
-    return inner;
+    if(tag==='pre')return'```\n'+n.innerText+'\n```\n';if(tag==='blockquote')return'> '+inner+'\n';
+    if(tag==='a')return'['+inner+']('+n.href+')';if(tag==='li')return'- '+inner+'\n';
+    if(tag==='ul'||tag==='ol')return inner+'\n';if(tag==='hr')return'---\n';if(tag==='br')return'\n';
+    if(tag==='p'||tag==='div')return inner+'\n';return inner;
   }
   return Array.from(d.childNodes).map(walk).join('').replace(/\n{3,}/g,'\n\n').trim();
 }
 
-/* EXPORT */
+/* ── EXPORT ── */
 function getCurrentFont(){
   if(body.classList.contains('font-sans'))return"'Anthropic Sans',Helvetica,Arial,sans-serif";
   if(body.classList.contains('font-mono'))return"'Courier New',Courier,monospace";
@@ -535,72 +781,43 @@ pre code{background:none;border:none;padding:0}hr{border:none;border-top:1px sol
 ul,ol{padding-left:1.6em}a{color:#3a7bd5}
 </style></head><body>${editor.innerHTML}</body></html>`;
 }
-function downloadHtml(){
-  const blob=new Blob([buildFullHtml()],{type:'text/html'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='documento.html';a.click();
-  showToast('HTML baixado ✓');closeModal();
-}
-function downloadPdf(){
-  const w=window.open('','_blank');
-  if(!w){showToast('Permita pop-ups para exportar PDF');return;}
-  w.document.write(buildFullHtml());w.document.close();
-  w.onload=()=>w.print();
-  showToast('Salve como PDF na caixa de impressão');closeModal();
-}
+function downloadHtml(){const blob=new Blob([buildFullHtml()],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='documento.html';a.click();showToast('HTML baixado ✓');closeModal();}
+function downloadPdf(){const w=window.open('','_blank');if(!w){showToast('Permita pop-ups para exportar PDF');return;}w.document.write(buildFullHtml());w.document.close();w.onload=()=>w.print();showToast('Salve como PDF na caixa de impressão');closeModal();}
 function downloadDocx(){
-  const txt=editor.innerText||'';
-  let rtf='{\\rtf1\\ansi\\deff0{\\fonttbl{\\f0 Times New Roman;}}\\f0\\fs34 ';
-  for(let l of txt.split('\n')){rtf+=l.replace(/[\\{}]/g,'\\$&')+' \\par ';}
-  rtf+='}';
-  const blob=new Blob([rtf],{type:'application/msword'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='documento.doc';a.click();
-  showToast('Documento baixado ✓');closeModal();
+  const txt=editor.innerText||'';let rtf='{\\rtf1\\ansi\\deff0{\\fonttbl{\\f0 Times New Roman;}}\\f0\\fs34 ';
+  for(let l of txt.split('\n')){rtf+=l.replace(/[\\{}]/g,'\\$&')+' \\par ';}rtf+='}';
+  const blob=new Blob([rtf],{type:'application/msword'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='documento.doc';a.click();showToast('Documento baixado ✓');closeModal();
 }
-
 function showDownloadModal(){
-  openModal(`
-    <h3>Baixar documento</h3>
-    <p>Escolha o formato:</p>
-    <div class="modal-actions">
-      <button class="modal-btn" id="dl-pdf">
-        <svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="2" y="1" width="12" height="14" rx="2"/><path d="M5 6h6M5 9h4"/></svg>PDF — via impressão
-      </button>
-      <button class="modal-btn" id="dl-docx">
-        <svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="2" y="1" width="12" height="14" rx="2"/><path d="M5 6h6M5 9h6M5 12h3"/></svg>DOC — Word / Google Docs
-      </button>
-      <button class="modal-btn" id="dl-html">
-        <svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><polyline points="4 6 2 8 4 10"/><polyline points="12 6 14 8 12 10"/><line x1="9" y1="4" x2="7" y2="12"/></svg>HTML
-      </button>
-    </div>
-  `);
+  openModal(`<h3>Baixar documento</h3><p>Escolha o formato:</p><div class="modal-actions">
+    <button class="modal-btn" id="dl-pdf"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="2" y="1" width="12" height="14" rx="2"/><path d="M5 6h6M5 9h4"/></svg>PDF — via impressão</button>
+    <button class="modal-btn" id="dl-docx"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="2" y="1" width="12" height="14" rx="2"/><path d="M5 6h6M5 9h6M5 12h3"/></svg>DOC — Word / Google Docs</button>
+    <button class="modal-btn" id="dl-html"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><polyline points="4 6 2 8 4 10"/><polyline points="12 6 14 8 12 10"/><line x1="9" y1="4" x2="7" y2="12"/></svg>HTML</button>
+  </div>`);
   document.getElementById('dl-pdf').addEventListener('click',downloadPdf);
   document.getElementById('dl-docx').addEventListener('click',downloadDocx);
   document.getElementById('dl-html').addEventListener('click',downloadHtml);
 }
 function showGdocsModal(){
-  openModal(`
-    <h3>Exportar para Google Docs</h3>
-    <p>Siga os passos para abrir no Google Docs:</p>
+  openModal(`<h3>Exportar para Google Docs</h3><p>Siga os passos:</p>
     <div class="modal-step"><div class="modal-step-num">1</div><span style="font-size:13px;line-height:1.5">Baixe o arquivo <b>.doc</b> abaixo</span></div>
     <div class="modal-step"><div class="modal-step-num">2</div><span style="font-size:13px;line-height:1.5">Acesse <a href="https://drive.google.com" target="_blank" style="color:#3a7bd5">drive.google.com</a> → <b>Novo → Upload de arquivo</b></span></div>
     <div class="modal-step"><div class="modal-step-num">3</div><span style="font-size:13px;line-height:1.5">Clique duas vezes no arquivo → <b>Abrir com Google Docs</b></span></div>
     <div class="modal-actions" style="margin-top:18px">
       <button class="modal-btn" id="gdocs-cancel">Cancelar</button>
-      <button class="modal-btn primary" id="gdocs-download">
-        <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 2v8M5 7l3 3 3-3M3 12h10"/></svg>Baixar .doc
-      </button>
-    </div>
-  `);
+      <button class="modal-btn primary" id="gdocs-download"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 2v8M5 7l3 3 3-3M3 12h10"/></svg>Baixar .doc</button>
+    </div>`);
   document.getElementById('gdocs-cancel').addEventListener('click',closeModal);
   document.getElementById('gdocs-download').addEventListener('click',downloadDocx);
 }
-
 document.getElementById('btnDownload').addEventListener('click',showDownloadModal);
 document.getElementById('btnGdocs').addEventListener('click',showGdocsModal);
 document.getElementById('sb-docx').addEventListener('mousedown',e=>{e.preventDefault();downloadDocx();});
 document.getElementById('sb-pdf').addEventListener('mousedown',e=>{e.preventDefault();downloadPdf();});
 document.getElementById('sb-html').addEventListener('mousedown',e=>{e.preventDefault();downloadHtml();});
 document.getElementById('sb-gdocs').addEventListener('mousedown',e=>{e.preventDefault();showGdocsModal();});
+
+countWords();
 </script>
 </body>
 </html>
