@@ -54,7 +54,22 @@ select#fontsel:hover{background:var(--btn-hover);color:var(--text)}
 /* MAIN */
 #main{display:flex;flex:1;overflow:hidden;position:relative}
 
-#editor-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;justify-content:center}
+#editor-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;justify-content:center;position:relative}
+#line-numbers{
+  position:absolute;left:0;top:0;bottom:0;width:40px;
+  padding:40px 0 100px;display:none;flex-direction:column;
+  align-items:flex-end;gap:0;pointer-events:none;
+  font-size:12px;line-height:1.75;color:var(--muted);
+  font-family:'Courier New',Courier,monospace;
+  user-select:none;
+}
+@media(min-width:600px){#line-numbers{padding-top:60px;padding-bottom:120px}}
+#line-numbers.visible{display:flex}
+#line-numbers span{display:block;height:calc(17px * 1.75);padding-right:10px;opacity:.5}
+body.font-mono #line-numbers span{height:calc(15px * 1.8)}
+/* shift editor right when line numbers visible */
+#editor-wrap.with-lines #editor{padding-left:52px}
+@media(min-width:600px){#editor-wrap.with-lines #editor{padding-left:60px}}
 #editor{
   width:100%;max-width:720px;min-height:100%;
   padding:40px 20px 100px;outline:none;
@@ -212,6 +227,9 @@ select#fontsel:hover{background:var(--btn-hover);color:var(--text)}
     <button class="top-btn" id="sidebarToggle" title="Ferramentas">
       <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="2" y1="4" x2="14" y2="4"/><line x1="2" y1="8" x2="14" y2="8"/><line x1="2" y1="12" x2="14" y2="12"/></svg>
     </button>
+    <button class="top-btn" id="lineToggle" title="Números de linha">
+      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="6" y1="4" x2="14" y2="4"/><line x1="6" y1="8" x2="14" y2="8"/><line x1="6" y1="12" x2="14" y2="12"/><line x1="2" y1="4" x2="3" y2="4"/><line x1="2" y1="8" x2="3" y2="8"/><line x1="2" y1="12" x2="3" y2="12"/></svg>
+    </button>
     <button class="top-btn" id="topbarToggle" title="Ocultar barra">
       <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><polyline points="4 10 8 6 12 10"/></svg>
     </button>
@@ -221,7 +239,8 @@ select#fontsel:hover{background:var(--btn-hover);color:var(--text)}
 
 <div id="main">
   <div id="editor-wrap">
-    <div id="editor" contenteditable="true" spellcheck="true" data-placeholder="Comece a escrever…"></div>
+    <div id="line-numbers"></div>
+  <div id="editor" contenteditable="true" spellcheck="true" data-placeholder="Comece a escrever…"></div>
   </div>
   <div id="sidebar">
     <div class="sidebar-label">Formatação</div>
@@ -390,6 +409,29 @@ document.getElementById('mdToggle').addEventListener('click',function(){
   else{editor.innerHTML=mdToHtml(editor.innerText);}
   countWords();
 });
+
+/* LINE NUMBERS */
+const lineNumbers=document.getElementById('line-numbers');
+const editorWrap=document.getElementById('editor-wrap');
+let showLines=false;
+
+function updateLineNumbers(){
+  if(!showLines)return;
+  const lines=editor.innerText.split('\n');
+  const count=Math.max(lines.length,1);
+  lineNumbers.innerHTML=Array.from({length:count},(_,i)=>`<span>${i+1}</span>`).join('');
+}
+
+document.getElementById('lineToggle').addEventListener('click',function(){
+  showLines=!showLines;
+  this.classList.toggle('active',showLines);
+  lineNumbers.classList.toggle('visible',showLines);
+  editorWrap.classList.toggle('with-lines',showLines);
+  if(showLines)updateLineNumbers();
+});
+
+editor.addEventListener('input',()=>{countWords();autoSave();updateLineNumbers();});
+editor.addEventListener('keyup',()=>{countWords();autoSave();updateLineNumbers();});
 
 document.getElementById('topbarToggle').addEventListener('click',()=>{
   topbar.style.display='none';topbarReveal.style.display='block';
