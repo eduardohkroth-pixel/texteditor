@@ -15,11 +15,18 @@
   --font-ui:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
   --topbar-h:48px;--status-h:32px;
 }
+/* theme overlay - sepia */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+  background:transparent;transition:background .3s;
+}
+body.sepia::after{
+  background:rgba(180,120,30,0.13);
+}
 body.sepia{
-  --bg:#f5efe0 !important;--surface:#ede4ce !important;--text:#3b2f1e !important;--muted:#9c8668 !important;--border:#d6c9ad !important;
-  --toolbar-bg:#f5efe0 !important;--toolbar-border:#d6c9ad !important;--toolbar-shadow:0 2px 12px rgba(80,50,10,0.1) !important;
-  --btn-hover:#ede4ce !important;--accent:#3b2f1e !important;--sidebar-bg:#f0e9d6 !important;
-  background:var(--bg) !important;color:var(--text) !important;
+  --bg:#fdf6e3;--surface:#f5eccc;--text:#3b2a1a;--muted:#a08060;--border:#e0d0aa;
+  --toolbar-bg:#fdf6e3;--toolbar-border:#e0d0aa;--toolbar-shadow:0 2px 12px rgba(80,50,10,0.1);
+  --btn-hover:#f5eccc;--accent:#3b2a1a;--sidebar-bg:#f8f0d8;
 }
 body.dark{
   --bg:#141414;--surface:#1e1e1c;--text:#e8e8e4;--muted:#666;--border:#2e2e2c;
