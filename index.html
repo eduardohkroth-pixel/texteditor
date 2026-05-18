@@ -387,6 +387,20 @@ document.addEventListener('selectionchange',()=>{
 document.addEventListener('mouseup',()=>setTimeout(positionToolbar,10));
 document.addEventListener('touchend',()=>setTimeout(positionToolbar,200));
 editor.addEventListener('keyup',()=>{countWords();autoSave();});
+
+editor.addEventListener('keydown',e=>{
+  const mod=e.ctrlKey||e.metaKey;
+  if(!mod)return;
+  const map={b:'bold',i:'italic',u:'underline'};
+  if(map[e.key]){e.preventDefault();execCmd(map[e.key]);return;}
+  if(e.key==='d'){e.preventDefault();execCmd('strikeThrough');return;}
+  if(e.key==='1'){e.preventDefault();execCmd('h1');return;}
+  if(e.key==='2'){e.preventDefault();execCmd('h2');return;}
+  if(e.key==='3'){e.preventDefault();execCmd('h3');return;}
+  if(e.key==='k'){e.preventDefault();execCmd('createLink');return;}
+  if(e.shiftKey&&e.key==='7'){e.preventDefault();execCmd('insertOrderedList');return;}
+  if(e.shiftKey&&e.key==='8'){e.preventDefault();execCmd('insertUnorderedList');return;}
+});
 editor.addEventListener('input',()=>{countWords();autoSave();});
 
 document.getElementById('darkToggle').addEventListener('click',()=>{
