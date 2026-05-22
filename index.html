@@ -37,7 +37,26 @@ body{
   padding-bottom:calc(var(--status-h) + var(--gap)*2);
 }
 
-/* ── FLOATING PANEL BASE ── */
+/* OUTLINE */
+#outline-inner::-webkit-scrollbar{width:3px}
+#outline-inner::-webkit-scrollbar-track{background:transparent}
+#outline-inner::-webkit-scrollbar-thumb{background:var(--panel-border);border-radius:99px}
+#outline-resizer:hover,#outline-resizer.active{background:var(--panel-border)}
+.outline-item{
+  display:block;width:100%;background:none;border:none;
+  text-align:left;cursor:pointer;color:var(--muted);
+  font-family:var(--font-ui);line-height:1.4;
+  border-radius:6px;padding:4px 6px;
+  transition:background .1s,color .1s;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  -webkit-tap-highlight-color:transparent;
+}
+.outline-item:hover{background:var(--btn-hover);color:var(--text)}
+.outline-item.h1{font-size:12px;font-weight:600;color:var(--text)}
+.outline-item.h2{font-size:11px;padding-left:14px}
+.outline-item.h3{font-size:10px;padding-left:24px}
+.outline-empty{font-size:11px;color:var(--muted);padding:4px 6px;font-family:var(--font-ui);}
+
 .panel{
   background:var(--panel-bg);
   border:1px solid var(--panel-border);
@@ -45,7 +64,7 @@ body{
   box-shadow:var(--panel-shadow);
 }
 
-/* ── TOPBAR ── */
+/* ── FLOATING PANEL BASE ── */
 #topbar{
   display:flex;align-items:center;justify-content:space-between;
   padding:0 12px;height:var(--topbar-h);
@@ -310,6 +329,7 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 <!-- TOPBAR -->
 <div id="topbar" class="panel">
   <div id="topbar-left">
+    <button class="top-btn" id="outlineToggle" title="Índice de títulos"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="2" y1="4" x2="6" y2="4"/><line x1="2" y1="8" x2="6" y2="8"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="8" y1="4" x2="14" y2="4"/><line x1="8" y1="8" x2="12" y2="8"/><line x1="8" y1="12" x2="11" y2="12"/></svg></button>
     <button class="top-btn" id="btnHome" title="Início"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M2 7l6-5 6 5v7H10v-4H6v4H2z"/></svg></button>
     <button class="top-btn" id="mdToggle"><span>Markdown</span><svg width="13" height="13" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><polyline points="4 6 2 8 4 10"/><polyline points="12 6 14 8 12 10"/><line x1="9" y1="4" x2="7" y2="12"/></svg></button>
   </div>
@@ -326,6 +346,15 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
   </div>
 </div>
 <div id="topbar-reveal"></div>
+
+<!-- OUTLINE PANEL -->
+<div id="outline" class="panel" style="display:none;flex-direction:column;width:200px;min-width:140px;max-width:280px;flex-shrink:0;overflow:hidden;position:relative;">
+  <div id="outline-resizer" style="position:absolute;right:0;top:0;bottom:0;width:5px;cursor:col-resize;z-index:10;transition:background .15s;"></div>
+  <div id="outline-inner" style="flex:1;overflow-y:auto;padding:10px 8px;scrollbar-width:thin;scrollbar-color:var(--panel-border) transparent;">
+    <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;padding:2px 4px 8px;font-family:var(--font-ui);">Títulos</div>
+    <div id="outline-list"></div>
+  </div>
+</div>
 
 <!-- MAIN -->
 <div id="main">
@@ -566,7 +595,7 @@ function updateActiveStates(){
     document.querySelectorAll(`.sb-btn[data-cmd="${cmd}"]`).forEach(b=>b.classList.toggle('active',on));
   });
 }
-editor.addEventListener('keyup',()=>{countWords();autoSave();updateLineNumbers();updateActiveStates();});
+editor.addEventListener('keyup',()=>{countWords();autoSave();updateLineNumbers();updateActiveStates();updateOutline();});
 editor.addEventListener('input',()=>{countWords();autoSave();});
 editor.addEventListener('mouseup',updateActiveStates);
 editor.addEventListener('click',()=>{highlightActiveLine();updateActiveStates();});
