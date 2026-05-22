@@ -170,7 +170,7 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
   width:176px;flex-shrink:0;border-left:1px solid var(--border);
   background:var(--sidebar-bg);padding:12px 10px;display:none;flex-direction:column;gap:2px;
   overflow-y:auto;-webkit-overflow-scrolling:touch;order:2;position:relative;
-  min-width:140px;max-width:320px;
+  min-width:120px;max-width:320px;
 }
 #sidebar-resizer{
   position:absolute;left:0;top:0;bottom:0;width:5px;cursor:col-resize;
@@ -178,6 +178,25 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 }
 #sidebar-resizer:hover{background:var(--border)}
 #sidebar.open{display:flex}
+
+/* two-column grid for sb-btn when sidebar is wide enough */
+#sb-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:2px;
+  width:100%;
+}
+#sidebar.wide #sb-grid{
+  grid-template-columns:1fr 1fr;
+}
+#sidebar.wide .sidebar-label{
+  grid-column:1/-1;
+}
+#sidebar.wide .sb-btn{
+  flex-direction:column;align-items:center;justify-content:center;
+  padding:8px 4px;font-size:11px;gap:3px;text-align:center;
+}
+#sidebar.wide .sb-btn .icon{margin:0}
 @media(max-width:599px){
   #sidebar{
     position:fixed;bottom:var(--status-h);left:0;right:0;width:100%;
@@ -377,8 +396,14 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
     <div id="editor" contenteditable="true" spellcheck="true" data-placeholder="Comece a escrever…"></div>
   </div>
   <div id="sidebar">
-    <div class="sidebar-label">Formatação</div>
-    <button class="sb-btn" data-cmd="bold"><span class="icon" style="font-weight:800">B</span>Negrito</button>
+    <div id="sidebar-resizer"></div>
+    <div class="sidebar-label">Fonte</div>
+    <select id="fontsel" style="display:block;width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:6px 8px;font-size:12px;cursor:pointer;font-family:var(--font-ui);outline:none;margin-bottom:2px;">
+      <option value="font-serif">Serif (Times)</option>
+      <option value="font-sans">Sans (Anthropic)</option>
+      <option value="font-mono">Mono (Courier)</option>
+    </select>
+    <button class="sb-btn" data-cmd="bold">
     <button class="sb-btn" data-cmd="italic"><span class="icon" style="font-style:italic">I</span>Itálico</button>
     <button class="sb-btn" data-cmd="underline"><span class="icon" style="text-decoration:underline">S</span>Sublinhado</button>
     <button class="sb-btn" data-cmd="strikeThrough"><span class="icon" style="text-decoration:line-through">S</span>Riscado</button>
@@ -672,6 +697,33 @@ editor.addEventListener('keyup',()=>{countWords();autoSave();updateLineNumbers()
 editor.addEventListener('input',()=>{countWords();autoSave();});
 editor.addEventListener('click',highlightActiveLine);
 editor.addEventListener('focus',highlightActiveLine);
+
+/* sidebar resize */
+const sidebarResizer=document.getElementById('sidebar-resizer');
+const WIDE_THRESHOLD=210;
+let isResizing=false,startX=0,startW=0;
+sidebarResizer.addEventListener('mousedown',e=>{
+  isResizing=true;
+  startX=e.clientX;
+  startW=sidebar.getBoundingClientRect().width;
+  document.body.style.cursor='col-resize';
+  document.body.style.userSelect='none';
+  e.preventDefault();
+  e.stopPropagation();
+});
+document.addEventListener('mousemove',e=>{
+  if(!isResizing)return;
+  const delta=startX-e.clientX;
+  const newW=Math.min(320,Math.max(120,startW+delta));
+  sidebar.style.width=newW+'px';
+  sidebar.classList.toggle('wide',newW>=WIDE_THRESHOLD);
+});
+document.addEventListener('mouseup',()=>{
+  if(!isResizing)return;
+  isResizing=false;
+  document.body.style.cursor='';
+  document.body.style.userSelect='';
+});
 
 /* sidebar */
 document.getElementById('sidebarToggle').addEventListener('click',function(){sidebar.classList.toggle('open');this.classList.toggle('active');});
