@@ -112,25 +112,7 @@ body{
 #editor-wrap::-webkit-scrollbar-thumb{background:var(--panel-border);border-radius:99px}
 
 /* NOTEBOOK LINES */
-#editor.notebook-lines{
-  background-image:repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 28px,
-    rgba(0,0,0,0.08) 28px,
-    rgba(0,0,0,0.08) 29px
-  );
-  background-attachment:local;
-}
-body.dark #editor.notebook-lines{
-  background-image:repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 28px,
-    rgba(255,255,255,0.07) 28px,
-    rgba(255,255,255,0.07) 29px
-  );
-}
+#editor.notebook-lines{background-attachment:local}
 #line-numbers{
   position:absolute;left:0;top:0;bottom:0;width:40px;
   padding:40px 0 60px;display:none;flex-direction:column;
@@ -493,7 +475,11 @@ function closeModal(){modalOverlay.classList.remove('open');}
 document.getElementById('modal-close-btn').addEventListener('click',closeModal);
 modalOverlay.addEventListener('click',e=>{if(e.target===modalOverlay)closeModal();});
 
-function toggleDark(){body.classList.toggle('dark');try{localStorage.setItem('dark_mode',body.classList.contains('dark')?'1':'0');}catch(e){}}
+function toggleDark(){
+  body.classList.toggle('dark');
+  try{localStorage.setItem('dark_mode',body.classList.contains('dark')?'1':'0');}catch(e){}
+  if(editor.classList.contains('notebook-lines'))applyNotebookLines();
+}
 try{if(localStorage.getItem('dark_mode')==='1')body.classList.add('dark');}catch(e){}
 document.getElementById('darkToggle').addEventListener('click',toggleDark);
 document.getElementById('home-dark').addEventListener('click',toggleDark);
@@ -684,6 +670,7 @@ function applyFont(val){
   body.className=body.className.replace(/font-\w+/g,'').trim();
   body.classList.add(val);sbFontsel.value=val;
   try{localStorage.setItem('editor_font',val);}catch(e){}
+  requestAnimationFrame(applyNotebookLines);
 }
 sbFontsel.addEventListener('change',()=>applyFont(sbFontsel.value));
 try{const f=localStorage.getItem('editor_font');if(f)applyFont(f);}catch(e){}
@@ -732,16 +719,32 @@ function highlightActiveLine(){
   lineNumbers.querySelectorAll('span').forEach((s,i)=>s.classList.toggle('active',i===idx));
 }
 function applyNotebookLines(){
-  const lineH=Math.round(parseFloat(getComputedStyle(editor).lineHeight)||29.75);
-  if(editor.classList.contains('notebook-lines')){
-    const isDark=body.classList.contains('dark');
-    const color=isDark?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.08)';
-    editor.style.backgroundImage=`repeating-linear-gradient(to bottom,transparent 0px,transparent ${lineH-1}px,${color} ${lineH-1}px,${color} ${lineH}px)`;
-    editor.style.backgroundAttachment='local';
-  } else {
+  if(!editor.classList.contains('notebook-lines')){
     editor.style.backgroundImage='';
+    editor.style.backgroundSize='';
+    editor.style.backgroundPosition='';
     editor.style.backgroundAttachment='';
+    return;
   }
+  const span=document.createElement('span');
+  span.textContent='X';
+  span.style.cssText='position:absolute;visibility:hidden;pointer-events:none';
+  editor.appendChild(span);
+  const spanRect=span.getBoundingClientRect();
+  const editorRect=editor.getBoundingClientRect();
+  editor.removeChild(span);
+
+  const lhPx=Math.round(parseFloat(getComputedStyle(editor).lineHeight)||30);
+  // offset = where first line bottom sits relative to editor top
+  const firstLineBottom=Math.round(spanRect.bottom - editorRect.top);
+  const offsetY=firstLineBottom % lhPx || lhPx;
+
+  const isDark=body.classList.contains('dark');
+  const c=isDark?'rgba(255,255,255,0.09)':'rgba(0,0,0,0.1)';
+  editor.style.backgroundImage=`repeating-linear-gradient(to bottom,transparent,transparent ${lhPx-1}px,${c} ${lhPx-1}px,${c} ${lhPx}px)`;
+  editor.style.backgroundSize=`100% ${lhPx}px`;
+  editor.style.backgroundPosition=`left ${offsetY}px`;
+  editor.style.backgroundAttachment='local';
 }
 
 document.getElementById('notebookToggle').addEventListener('mousedown',function(e){
