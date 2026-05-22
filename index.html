@@ -20,7 +20,8 @@ body.dark{
   --toolbar-bg:#1e1e1c;--toolbar-border:#333;--toolbar-shadow:0 2px 16px rgba(0,0,0,0.4);
   --btn-hover:#2a2a28;--accent:#e8e8e4;--sidebar-bg:#1a1a18;
 }
-html,body{height:100%;overflow:hidden}
+body.dark #sidebar{box-shadow:0 2px 16px rgba(0,0,0,0.3);}
+
 body{display:flex;flex-direction:column;background:var(--bg);color:var(--text);font-family:var(--font-ui);transition:background .2s,color .2s}
 
 /* HOME */
@@ -68,8 +69,8 @@ body{display:flex;flex-direction:column;background:var(--bg);color:var(--text);f
 #topbar-reveal{display:none;position:fixed;top:0;left:0;right:0;height:4px;background:var(--border);cursor:pointer;z-index:100;transition:background .15s}
 #topbar-reveal:hover{background:var(--muted)}
 
-/* MAIN */
-#main{display:flex;flex:1;overflow:hidden;position:relative}
+body.dark #sidebar{box-shadow:0 2px 16px rgba(0,0,0,0.3);}
+#main{display:flex;flex:1;overflow:hidden;position:relative;align-items:stretch}
 #editor-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;justify-content:center;position:relative}
 
 /* LINE NUMBERS */
@@ -106,12 +107,17 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 
 /* SIDEBAR */
 #sidebar{
-  flex-shrink:0;border-left:1px solid var(--border);
-  background:var(--sidebar-bg);
+  flex-shrink:0;
   display:none;flex-direction:column;
-  overflow:hidden;
   order:2;position:relative;
   width:160px;min-width:120px;max-width:340px;
+  /* detached look */
+  margin:10px 10px 10px 0;
+  background:var(--sidebar-bg);
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  overflow:hidden;
 }
 #sidebar.open{display:flex}
 #sidebar-resizer{
