@@ -111,7 +111,7 @@ body{display:flex;flex-direction:column;background:var(--bg);color:var(--text);f
 select#fontsel{
   background:none;border:none;color:var(--muted);
   border-radius:8px;padding:6px 4px;font-size:12px;cursor:pointer;
-  font-family:var(--font-ui);outline:none;max-width:150px;
+  font-family:var(--font-ui);outline:none;max-width:150px;display:none;
 }
 select#fontsel:hover{background:var(--btn-hover);color:var(--text)}
 
@@ -169,8 +169,14 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 #sidebar{
   width:176px;flex-shrink:0;border-left:1px solid var(--border);
   background:var(--sidebar-bg);padding:12px 10px;display:none;flex-direction:column;gap:2px;
-  overflow-y:auto;-webkit-overflow-scrolling:touch;order:2;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;order:2;position:relative;
+  min-width:140px;max-width:320px;
 }
+#sidebar-resizer{
+  position:absolute;left:0;top:0;bottom:0;width:5px;cursor:col-resize;
+  background:transparent;z-index:10;transition:background .15s;
+}
+#sidebar-resizer:hover{background:var(--border)}
 #sidebar.open{display:flex}
 @media(max-width:599px){
   #sidebar{
