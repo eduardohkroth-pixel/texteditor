@@ -536,12 +536,33 @@ document.getElementById('btnSave').addEventListener('click',()=>{
 
 function execCmd(cmd){
   editor.focus();
-  if(['h1','h2','h3'].includes(cmd))document.execCommand('formatBlock',false,cmd);
-  else if(cmd==='blockquote')document.execCommand('formatBlock',false,'blockquote');
-  else if(cmd==='code'){const sel=window.getSelection();if(sel&&sel.toString()){const r=sel.getRangeAt(0);const c=document.createElement('code');try{r.surroundContents(c);}catch(e){}}}
-  else if(cmd==='hr')document.execCommand('insertHTML',false,'<hr>');
-  else if(cmd==='createLink'){const u=prompt('URL do link:');if(u)document.execCommand('createLink',false,u);}
-  else document.execCommand(cmd,false,null);
+  if(['h1','h2','h3'].includes(cmd)){
+    const current=document.queryCommandValue('formatBlock');
+    document.execCommand('formatBlock',false,current===cmd?'p':cmd);
+  } else if(cmd==='blockquote'){
+    const sel=window.getSelection();
+    if(sel&&sel.rangeCount){
+      const node=sel.getRangeAt(0).commonAncestorContainer;
+      const bq=node.nodeType===1?node.closest('blockquote'):(node.parentElement&&node.parentElement.closest('blockquote'));
+      if(bq){
+        // unwrap blockquote
+        const p=document.createElement('p');
+        p.innerHTML=bq.innerHTML;
+        bq.replaceWith(p);
+      } else {
+        document.execCommand('formatBlock',false,'blockquote');
+      }
+    }
+  } else if(cmd==='code'){
+    const sel=window.getSelection();
+    if(sel&&sel.toString()){const r=sel.getRangeAt(0);const c=document.createElement('code');try{r.surroundContents(c);}catch(e){}}
+  } else if(cmd==='hr'){
+    document.execCommand('insertHTML',false,'<hr>');
+  } else if(cmd==='createLink'){
+    const u=prompt('URL do link:');if(u)document.execCommand('createLink',false,u);
+  } else {
+    document.execCommand(cmd,false,null);
+  }
   countWords();autoSave();
 }
 document.querySelectorAll('[data-cmd]').forEach(btn=>{
@@ -667,13 +688,14 @@ document.addEventListener('mouseup',()=>{
 
 /* FONT */
 function applyFont(val){
-  body.className=body.className.replace(/font-\w+/g,'').trim();
-  body.classList.add(val);sbFontsel.value=val;
+  body.classList.remove('font-serif','font-sans','font-mono');
+  body.classList.add(val);
+  if(sbFontsel)sbFontsel.value=val;
   try{localStorage.setItem('editor_font',val);}catch(e){}
   requestAnimationFrame(applyNotebookLines);
 }
 sbFontsel.addEventListener('change',()=>applyFont(sbFontsel.value));
-try{const f=localStorage.getItem('editor_font');if(f)applyFont(f);}catch(e){}
+try{const f=localStorage.getItem('editor_font');if(f)applyFont(f);else applyFont('font-serif');}catch(e){applyFont('font-serif');}
 
 /* MARKDOWN */
 document.getElementById('mdToggle').addEventListener('click',function(){
