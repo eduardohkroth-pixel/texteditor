@@ -23,113 +23,57 @@ body.dark{
 html,body{height:100%;overflow:hidden}
 body{display:flex;flex-direction:column;background:var(--bg);color:var(--text);font-family:var(--font-ui);transition:background .2s,color .2s}
 
-/* ── HOME SCREEN ── */
-#home{
-  position:fixed;inset:0;background:var(--bg);z-index:500;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:24px;transition:background .2s;
-}
+/* HOME */
+#home{position:fixed;inset:0;background:var(--bg);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;transition:background .2s}
 #home.hidden{display:none}
 #home-inner{width:100%;max-width:560px}
 #home h1{font-size:22px;font-weight:600;margin-bottom:4px;letter-spacing:-.01em}
 #home p{font-size:13px;color:var(--muted);margin-bottom:28px}
-
 .home-section-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
-
-/* new doc + upload row */
 .home-actions{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
-.home-btn{
-  flex:1;min-width:120px;padding:12px 16px;border-radius:10px;
-  border:1px solid var(--border);background:var(--surface);
-  color:var(--text);font-family:var(--font-ui);font-size:13px;
-  cursor:pointer;display:flex;align-items:center;gap:8px;
-  transition:background .15s;-webkit-tap-highlight-color:transparent;
-}
+.home-btn{flex:1;min-width:120px;padding:12px 16px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:var(--font-ui);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .15s;-webkit-tap-highlight-color:transparent}
 .home-btn:hover,.home-btn:active{background:var(--btn-hover)}
 .home-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
 .home-btn.primary:hover{opacity:.85}
 .home-btn svg{flex-shrink:0}
-
-/* local docs list */
 #local-docs{margin-bottom:24px}
 #local-list{display:flex;flex-direction:column;gap:4px;max-height:200px;overflow-y:auto}
-.doc-item{
-  display:flex;align-items:center;gap:10px;padding:9px 12px;
-  border-radius:8px;border:1px solid var(--border);background:var(--surface);
-  cursor:pointer;transition:background .12s;-webkit-tap-highlight-color:transparent;
-}
+.doc-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:background .12s;-webkit-tap-highlight-color:transparent}
 .doc-item:hover,.doc-item:active{background:var(--btn-hover)}
 .doc-item-info{flex:1;min-width:0}
 .doc-item-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .doc-item-meta{font-size:11px;color:var(--muted);margin-top:1px}
-.doc-item-del{
-  background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;
-  border-radius:5px;flex-shrink:0;line-height:1;font-size:15px;
-  -webkit-tap-highlight-color:transparent;
-}
+.doc-item-del{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:5px;flex-shrink:0;line-height:1;font-size:15px;-webkit-tap-highlight-color:transparent}
 .doc-item-del:hover{color:var(--text);background:var(--btn-hover)}
 .home-empty{font-size:13px;color:var(--muted);padding:12px;text-align:center;border:1px dashed var(--border);border-radius:8px}
-
-/* preloaded */
 #preloaded-docs .pre-list{display:flex;flex-direction:column;gap:4px}
-.pre-item{
-  display:flex;align-items:center;gap:10px;padding:9px 12px;
-  border-radius:8px;border:1px solid var(--border);background:var(--surface);
-  cursor:pointer;transition:background .12s;-webkit-tap-highlight-color:transparent;
-}
+.pre-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:background .12s;-webkit-tap-highlight-color:transparent}
 .pre-item:hover,.pre-item:active{background:var(--btn-hover)}
 .pre-item-icon{font-size:16px;flex-shrink:0}
 .pre-item-info{flex:1}
 .pre-item-name{font-size:13px;font-weight:500}
 .pre-item-desc{font-size:11px;color:var(--muted);margin-top:1px}
-
-/* home top-right */
 #home-topright{position:absolute;top:14px;right:16px;display:flex;gap:6px}
-.home-icon-btn{
-  background:none;border:none;color:var(--muted);cursor:pointer;padding:6px;
-  border-radius:8px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent;
-}
+.home-icon-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:6px;border-radius:8px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent}
 .home-icon-btn:hover{background:var(--btn-hover);color:var(--text)}
 
-/* ── EDITOR ── */
-#topbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 12px;height:var(--topbar-h);border-bottom:1px solid var(--border);
-  background:var(--bg);flex-shrink:0;gap:6px;
-}
+/* TOPBAR */
+#topbar{display:flex;align-items:center;justify-content:space-between;padding:0 12px;height:var(--topbar-h);border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0;gap:6px}
 #topbar-left,#topbar-right{display:flex;align-items:center;gap:4px}
-.top-btn{
-  background:none;border:none;color:var(--muted);
-  border-radius:8px;padding:7px 8px;font-size:12px;cursor:pointer;
-  font-family:var(--font-ui);transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap;
-  -webkit-tap-highlight-color:transparent;min-width:32px;min-height:32px;justify-content:center;
-}
+.top-btn{background:none;border:none;color:var(--muted);border-radius:8px;padding:7px 8px;font-size:12px;cursor:pointer;font-family:var(--font-ui);transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap;-webkit-tap-highlight-color:transparent;min-width:32px;min-height:32px;justify-content:center}
 .top-btn:hover,.top-btn:active{background:var(--btn-hover);color:var(--text)}
 .top-btn.active{color:var(--accent)}
 .top-btn span{display:none}
 @media(min-width:600px){.top-btn span{display:inline}}
-select#fontsel{
-  background:none;border:none;color:var(--muted);
-  border-radius:8px;padding:6px 4px;font-size:12px;cursor:pointer;
-  font-family:var(--font-ui);outline:none;max-width:150px;display:none;
-}
-select#fontsel:hover{background:var(--btn-hover);color:var(--text)}
-
-#topbar-reveal{
-  display:none;position:fixed;top:0;left:0;right:0;height:4px;
-  background:var(--border);cursor:pointer;z-index:100;transition:background .15s;
-}
+#topbar-reveal{display:none;position:fixed;top:0;left:0;right:0;height:4px;background:var(--border);cursor:pointer;z-index:100;transition:background .15s}
 #topbar-reveal:hover{background:var(--muted)}
 
+/* MAIN */
 #main{display:flex;flex:1;overflow:hidden;position:relative}
 #editor-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;justify-content:center;position:relative}
-#line-numbers{
-  position:absolute;left:0;top:0;bottom:0;width:40px;
-  padding:40px 0 100px;display:none;flex-direction:column;
-  align-items:flex-end;gap:0;pointer-events:none;
-  font-size:12px;line-height:1.75;color:var(--muted);
-  font-family:'Courier New',Courier,monospace;user-select:none;
-}
+
+/* LINE NUMBERS */
+#line-numbers{position:absolute;left:0;top:0;bottom:0;width:40px;padding:40px 0 100px;display:none;flex-direction:column;align-items:flex-end;pointer-events:none;font-size:12px;line-height:1.75;color:var(--muted);font-family:'Courier New',Courier,monospace;user-select:none}
 @media(min-width:600px){#line-numbers{padding-top:60px;padding-bottom:120px}}
 #line-numbers.visible{display:flex}
 #line-numbers span{display:block;height:calc(17px * 1.75);padding-right:10px;opacity:.4;transition:opacity .1s,color .1s}
@@ -138,19 +82,13 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 #editor-wrap.with-lines #editor{padding-left:52px}
 @media(min-width:600px){#editor-wrap.with-lines #editor{padding-left:60px}}
 
-#editor{
-  width:100%;max-width:720px;min-height:100%;
-  padding:40px 20px 100px;outline:none;
-  font-size:17px;line-height:1.75;color:var(--text);
-  caret-color:var(--text);word-break:break-word;
-}
+/* EDITOR */
+#editor{width:100%;max-width:720px;min-height:100%;padding:40px 20px 100px;outline:none;font-size:17px;line-height:1.75;color:var(--text);caret-color:var(--text);word-break:break-word}
 @media(min-width:600px){#editor{padding:60px 48px 120px}}
 #editor[data-placeholder]:empty::before{content:attr(data-placeholder);color:var(--muted);pointer-events:none}
-
 .font-serif #editor{font-family:'Times New Roman','Times',Georgia,serif}
 .font-sans #editor{font-family:'Anthropic Sans',Helvetica,Arial,sans-serif}
 .font-mono #editor{font-family:'Courier New',Courier,monospace;font-size:15px;line-height:1.8}
-
 #editor h1{font-size:1.8em;font-weight:700;margin:1.2em 0 .4em;line-height:1.2}
 #editor h2{font-size:1.4em;font-weight:700;margin:1em 0 .35em;line-height:1.3}
 #editor h3{font-size:1.15em;font-weight:600;margin:.9em 0 .3em}
@@ -166,96 +104,100 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 #editor em{font-style:italic}
 #editor hr{border:none;border-top:1px solid var(--border);margin:1.5em 0}
 
+/* SIDEBAR */
 #sidebar{
-  width:176px;flex-shrink:0;border-left:1px solid var(--border);
-  background:var(--sidebar-bg);padding:12px 10px;display:none;flex-direction:column;gap:2px;
-  overflow-y:auto;-webkit-overflow-scrolling:touch;order:2;position:relative;
-  min-width:120px;max-width:320px;
+  flex-shrink:0;border-left:1px solid var(--border);
+  background:var(--sidebar-bg);
+  display:none;flex-direction:column;
+  overflow:hidden;
+  order:2;position:relative;
+  width:160px;min-width:120px;max-width:340px;
 }
-#sidebar-resizer{
-  position:absolute;left:0;top:0;bottom:0;width:5px;cursor:col-resize;
-  background:transparent;z-index:10;transition:background .15s;
-}
-#sidebar-resizer:hover{background:var(--border)}
 #sidebar.open{display:flex}
+#sidebar-resizer{
+  position:absolute;left:0;top:0;bottom:0;width:5px;
+  cursor:col-resize;z-index:10;transition:background .15s;
+}
+#sidebar-resizer:hover,#sidebar-resizer.active{background:var(--border)}
 
-/* two-column grid for sb-btn when sidebar is wide enough */
-#sb-grid{
+#sidebar-inner{
+  flex:1;overflow-y:auto;padding:10px 8px;
+  display:flex;flex-direction:column;gap:0;
+}
+.sb-section-label{
+  font-size:9px;color:var(--muted);text-transform:uppercase;
+  letter-spacing:.05em;padding:8px 4px 3px;
+  white-space:normal;word-break:break-word;
+  display:block;width:100%;line-height:1.3;
+}
+/* font select */
+#sb-fontsel{
+  width:100%;background:var(--surface);border:1px solid var(--border);
+  color:var(--text);border-radius:7px;padding:5px 6px;
+  font-size:11px;cursor:pointer;font-family:var(--font-ui);
+  outline:none;margin-bottom:4px;
+}
+
+/* button grid — always fills full width */
+.sb-section{
   display:grid;
-  grid-template-columns:1fr;
-  gap:2px;
-  width:100%;
+  gap:3px;
+  margin-bottom:2px;
+  grid-template-columns:repeat(var(--cols,2),1fr);
 }
-#sidebar.wide #sb-grid{
-  grid-template-columns:1fr 1fr;
-}
-#sidebar.wide .sidebar-label{
-  grid-column:1/-1;
-}
-#sidebar.wide .sb-btn{
-  flex-direction:column;align-items:center;justify-content:center;
-  padding:8px 4px;font-size:11px;gap:3px;text-align:center;
-}
-#sidebar.wide .sb-btn .icon{margin:0}
-@media(max-width:599px){
-  #sidebar{
-    position:fixed;bottom:var(--status-h);left:0;right:0;width:100%;
-    border-left:none;border-top:1px solid var(--border);
-    flex-direction:row;flex-wrap:wrap;padding:8px;gap:4px;
-    max-height:200px;overflow-y:auto;z-index:200;order:unset;
-  }
-  #sidebar .sidebar-label{display:none}
-  .sb-btn{width:calc(33.33% - 4px);justify-content:center;flex-direction:column;align-items:center;padding:8px 4px;font-size:11px;gap:3px}
-  .sb-btn .icon{font-size:15px}
-}
-.sidebar-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin:8px 0 2px;padding:0 4px;width:100%}
 .sb-btn{
-  display:flex;align-items:center;gap:8px;background:none;border:none;
-  color:var(--text);font-family:var(--font-ui);font-size:13px;padding:6px 8px;
-  border-radius:6px;cursor:pointer;text-align:left;transition:background .1s;width:100%;
-  -webkit-tap-highlight-color:transparent;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:7px 3px;
+  background:none;border:none;color:var(--text);
+  font-family:var(--font-ui);font-size:10px;line-height:1.2;
+  border-radius:6px;cursor:pointer;text-align:center;
+  transition:background .1s;-webkit-tap-highlight-color:transparent;
+  min-width:0;overflow:hidden;
 }
 .sb-btn:hover,.sb-btn:active{background:var(--btn-hover)}
-.sb-btn .icon{width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--muted);flex-shrink:0}
+.sb-btn .ic{
+  font-size:13px;font-weight:700;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  width:18px;height:18px;flex-shrink:0;
+}
+.sb-btn .lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 
-#toolbar{
-  position:fixed;background:var(--toolbar-bg);border:1px solid var(--toolbar-border);
-  border-radius:8px;box-shadow:var(--toolbar-shadow);
-  display:none;align-items:center;gap:1px;padding:4px 5px;z-index:999;
+/* mobile: horizontal scrollable strip at bottom */
+@media(max-width:599px){
+  #sidebar{
+    position:fixed;bottom:var(--status-h);left:0;right:0;
+    width:100%!important;max-width:100%;
+    border-left:none;border-top:1px solid var(--border);
+    z-index:200;order:unset;height:auto;
+  }
+  #sidebar-resizer{display:none}
+  #sidebar-inner{
+    flex-direction:row;flex-wrap:wrap;padding:6px;
+    overflow-y:auto;max-height:180px;
+  }
+  .sb-section-label{display:none}
+  .sb-section{grid-template-columns:repeat(5,1fr);gap:3px;width:100%}
+  #sb-fontsel{display:none}
 }
+
+/* FLOATING TOOLBAR */
+#toolbar{position:fixed;background:var(--toolbar-bg);border:1px solid var(--toolbar-border);border-radius:8px;box-shadow:var(--toolbar-shadow);display:none;align-items:center;gap:1px;padding:4px 5px;z-index:999}
 #toolbar.visible{display:flex}
-.tb-btn{
-  background:none;border:none;color:var(--text);width:30px;height:30px;
-  border-radius:5px;cursor:pointer;font-family:'Georgia',serif;font-size:13px;
-  display:flex;align-items:center;justify-content:center;transition:background .1s;flex-shrink:0;
-  -webkit-tap-highlight-color:transparent;
-}
+.tb-btn{background:none;border:none;color:var(--text);width:30px;height:30px;border-radius:5px;cursor:pointer;font-family:'Georgia',serif;font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .1s;flex-shrink:0;-webkit-tap-highlight-color:transparent}
 .tb-btn:hover,.tb-btn:active{background:var(--btn-hover)}
 .tb-sep{width:1px;height:18px;background:var(--border);margin:0 2px;flex-shrink:0}
 .tb-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-#modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:2000;
-  display:none;align-items:flex-end;justify-content:center;
-}
+/* MODAL */
+#modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:2000;display:none;align-items:flex-end;justify-content:center}
 @media(min-width:500px){#modal-overlay{align-items:center}}
 #modal-overlay.open{display:flex}
-#modal{
-  background:var(--bg);border:1px solid var(--border);
-  border-radius:16px 16px 0 0;
-  padding:24px 20px 32px;width:100%;max-width:420px;
-  box-shadow:0 -4px 40px rgba(0,0,0,0.15);position:relative;
-}
+#modal{background:var(--bg);border:1px solid var(--border);border-radius:16px 16px 0 0;padding:24px 20px 32px;width:100%;max-width:420px;box-shadow:0 -4px 40px rgba(0,0,0,0.15);position:relative}
 @media(min-width:500px){#modal{border-radius:12px;padding:28px}}
 #modal h3{font-size:15px;font-weight:600;margin-bottom:6px}
 #modal p{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5}
 .modal-actions{display:flex;gap:8px;flex-direction:column}
-.modal-btn{
-  width:100%;padding:11px 14px;border-radius:8px;font-size:14px;font-family:var(--font-ui);
-  cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);
-  transition:all .15s;display:flex;align-items:center;gap:8px;
-  -webkit-tap-highlight-color:transparent;
-}
+.modal-btn{width:100%;padding:11px 14px;border-radius:8px;font-size:14px;font-family:var(--font-ui);cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:all .15s;display:flex;align-items:center;gap:8px;-webkit-tap-highlight-color:transparent}
 .modal-btn:hover,.modal-btn:active{background:var(--btn-hover)}
 .modal-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}
 .modal-btn.primary:hover{opacity:.85}
@@ -263,23 +205,17 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 .modal-step{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px}
 .modal-step-num{width:22px;height:22px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 
-#toast{
-  position:fixed;bottom:48px;left:50%;transform:translateX(-50%) translateY(12px);
-  background:var(--accent);color:var(--bg);padding:9px 18px;border-radius:10px;
-  font-size:13px;opacity:0;transition:all .25s;z-index:3000;pointer-events:none;white-space:nowrap;
-}
+/* TOAST */
+#toast{position:fixed;bottom:48px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--accent);color:var(--bg);padding:9px 18px;border-radius:10px;font-size:13px;opacity:0;transition:all .25s;z-index:3000;pointer-events:none;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-#status{
-  font-size:11px;color:var(--muted);padding:0 16px;height:var(--status-h);
-  border-top:1px solid var(--border);background:var(--bg);flex-shrink:0;
-  display:flex;align-items:center;justify-content:space-between;
-}
+/* STATUS */
+#status{font-size:11px;color:var(--muted);padding:0 16px;height:var(--status-h);border-top:1px solid var(--border);background:var(--bg);flex-shrink:0;display:flex;align-items:center;justify-content:space-between}
 </style>
 </head>
 <body class="font-serif">
 
-<!-- HOME SCREEN -->
+<!-- HOME -->
 <div id="home">
   <div id="home-topright">
     <button class="home-icon-btn" id="home-dark" title="Modo escuro">
@@ -289,55 +225,26 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
   <div id="home-inner">
     <h1>Editor</h1>
     <p>Onde você quer começar?</p>
-
     <div class="home-actions">
       <button class="home-btn primary" id="home-new">
-        <svg width="15" height="15" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>
-        Novo documento
+        <svg width="15" height="15" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="8" y1="3" x2="8" y2="13"/><line x1="3" y1="8" x2="13" y2="8"/></svg>Novo documento
       </button>
       <button class="home-btn" id="home-upload-btn">
-        <svg width="15" height="15" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 11V3M5 6l3-3 3 3M3 13h10"/></svg>
-        Abrir arquivo
+        <svg width="15" height="15" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 11V3M5 6l3-3 3 3M3 13h10"/></svg>Abrir arquivo
       </button>
       <input type="file" id="home-file-input" accept=".md,.markdown,.txt,.html" style="display:none">
     </div>
-
     <div id="local-docs">
       <div class="home-section-label">Documentos salvos</div>
       <div id="local-list"></div>
     </div>
-
     <div id="preloaded-docs">
       <div class="home-section-label">Modelos</div>
       <div class="pre-list">
-        <div class="pre-item" data-pre="blank">
-          <span class="pre-item-icon">📄</span>
-          <div class="pre-item-info">
-            <div class="pre-item-name">Em branco</div>
-            <div class="pre-item-desc">Documento vazio</div>
-          </div>
-        </div>
-        <div class="pre-item" data-pre="notes">
-          <span class="pre-item-icon">📝</span>
-          <div class="pre-item-info">
-            <div class="pre-item-name">Bloco de notas</div>
-            <div class="pre-item-desc">Anotações rápidas com estrutura simples</div>
-          </div>
-        </div>
-        <div class="pre-item" data-pre="markdown">
-          <span class="pre-item-icon">✍️</span>
-          <div class="pre-item-info">
-            <div class="pre-item-name">Guia Markdown</div>
-            <div class="pre-item-desc">Referência dos principais elementos</div>
-          </div>
-        </div>
-        <div class="pre-item" data-pre="letter">
-          <span class="pre-item-icon">✉️</span>
-          <div class="pre-item-info">
-            <div class="pre-item-name">Carta / Ofício</div>
-            <div class="pre-item-desc">Modelo de correspondência formal</div>
-          </div>
-        </div>
+        <div class="pre-item" data-pre="blank"><span class="pre-item-icon">📄</span><div class="pre-item-info"><div class="pre-item-name">Em branco</div><div class="pre-item-desc">Documento vazio</div></div></div>
+        <div class="pre-item" data-pre="notes"><span class="pre-item-icon">📝</span><div class="pre-item-info"><div class="pre-item-name">Bloco de notas</div><div class="pre-item-desc">Anotações rápidas com estrutura simples</div></div></div>
+        <div class="pre-item" data-pre="markdown"><span class="pre-item-icon">✍️</span><div class="pre-item-info"><div class="pre-item-name">Guia Markdown</div><div class="pre-item-desc">Referência dos principais elementos</div></div></div>
+        <div class="pre-item" data-pre="letter"><span class="pre-item-icon">✉️</span><div class="pre-item-info"><div class="pre-item-name">Carta / Ofício</div><div class="pre-item-desc">Modelo de correspondência formal</div></div></div>
       </div>
     </div>
   </div>
@@ -346,46 +253,19 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 <!-- EDITOR -->
 <div id="topbar">
   <div id="topbar-left">
-    <button class="top-btn" id="btnHome" title="Início">
-      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M2 7l6-5 6 5v7H10v-4H6v4H2z"/></svg>
-    </button>
-    <select id="fontsel" title="Fonte">
-      <option value="font-serif">Serif</option>
-      <option value="font-sans">Sans (Anthropic)</option>
-      <option value="font-mono">Mono</option>
-    </select>
+    <button class="top-btn" id="btnHome" title="Início"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M2 7l6-5 6 5v7H10v-4H6v4H2z"/></svg></button>
     <button class="top-btn" id="mdToggle"><span>Markdown</span><svg width="13" height="13" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><polyline points="4 6 2 8 4 10"/><polyline points="12 6 14 8 12 10"/><line x1="9" y1="4" x2="7" y2="12"/></svg></button>
   </div>
   <div id="topbar-right">
-    <button class="top-btn" id="btnUpload" title="Abrir arquivo">
-      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 11V3M5 6l3-3 3 3M3 13h10"/></svg>
-      <span>Abrir</span>
-    </button>
+    <button class="top-btn" id="btnUpload" title="Abrir arquivo"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 11V3M5 6l3-3 3 3M3 13h10"/></svg><span>Abrir</span></button>
     <input type="file" id="fileInput" accept=".md,.markdown,.txt,.html" style="display:none">
-    <button class="top-btn" id="btnSave" title="Salvar localmente">
-      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M3 3h8l2 2v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M5 3v4h6V3M5 13v-4h6v4"/></svg>
-      <span>Salvar</span>
-    </button>
-    <button class="top-btn" id="btnDownload" title="Baixar">
-      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 3v8M5 8l3 3 3-3M3 13h10"/></svg>
-      <span>Baixar</span>
-    </button>
-    <button class="top-btn" id="btnGdocs" title="Google Docs">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 10h8M8 14h5"/><path d="M14 2v5h6"/></svg>
-      <span>Docs</span>
-    </button>
-    <button class="top-btn" id="lineToggle" title="Números de linha">
-      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="6" y1="4" x2="14" y2="4"/><line x1="6" y1="8" x2="14" y2="8"/><line x1="6" y1="12" x2="14" y2="12"/><line x1="2" y1="4" x2="3" y2="4"/><line x1="2" y1="8" x2="3" y2="8"/><line x1="2" y1="12" x2="3" y2="12"/></svg>
-    </button>
-    <button class="top-btn" id="darkToggle" title="Modo escuro">
-      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M13 8.5A5.5 5.5 0 0 1 7.5 2a6 6 0 1 0 5.5 6.5z"/></svg>
-    </button>
-    <button class="top-btn" id="sidebarToggle" title="Ferramentas">
-      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="2" y1="4" x2="14" y2="4"/><line x1="2" y1="8" x2="14" y2="8"/><line x1="2" y1="12" x2="14" y2="12"/></svg>
-    </button>
-    <button class="top-btn" id="topbarToggle" title="Ocultar barra">
-      <svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><polyline points="4 10 8 6 12 10"/></svg>
-    </button>
+    <button class="top-btn" id="btnSave" title="Salvar"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M3 3h8l2 2v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M5 3v4h6V3M5 13v-4h6v4"/></svg><span>Salvar</span></button>
+    <button class="top-btn" id="btnDownload" title="Baixar"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 3v8M5 8l3 3 3-3M3 13h10"/></svg><span>Baixar</span></button>
+    <button class="top-btn" id="btnGdocs" title="Google Docs"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 10h8M8 14h5"/><path d="M14 2v5h6"/></svg><span>Docs</span></button>
+    <button class="top-btn" id="lineToggle" title="Números de linha"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="6" y1="4" x2="14" y2="4"/><line x1="6" y1="8" x2="14" y2="8"/><line x1="6" y1="12" x2="14" y2="12"/><line x1="2" y1="4" x2="3" y2="4"/><line x1="2" y1="8" x2="3" y2="8"/><line x1="2" y1="12" x2="3" y2="12"/></svg></button>
+    <button class="top-btn" id="darkToggle" title="Modo escuro"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M13 8.5A5.5 5.5 0 0 1 7.5 2a6 6 0 1 0 5.5 6.5z"/></svg></button>
+    <button class="top-btn" id="sidebarToggle" title="Ferramentas"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><line x1="2" y1="4" x2="14" y2="4"/><line x1="2" y1="8" x2="14" y2="8"/><line x1="2" y1="12" x2="14" y2="12"/></svg></button>
+    <button class="top-btn" id="topbarToggle" title="Ocultar barra"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><polyline points="4 10 8 6 12 10"/></svg></button>
   </div>
 </div>
 <div id="topbar-reveal"></div>
@@ -395,38 +275,65 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
     <div id="line-numbers"></div>
     <div id="editor" contenteditable="true" spellcheck="true" data-placeholder="Comece a escrever…"></div>
   </div>
+
   <div id="sidebar">
     <div id="sidebar-resizer"></div>
-    <div class="sidebar-label">Fonte</div>
-    <select id="fontsel" style="display:block;width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:6px 8px;font-size:12px;cursor:pointer;font-family:var(--font-ui);outline:none;margin-bottom:2px;">
-      <option value="font-serif">Serif (Times)</option>
-      <option value="font-sans">Sans (Anthropic)</option>
-      <option value="font-mono">Mono (Courier)</option>
-    </select>
-    <button class="sb-btn" data-cmd="bold">
-    <button class="sb-btn" data-cmd="italic"><span class="icon" style="font-style:italic">I</span>Itálico</button>
-    <button class="sb-btn" data-cmd="underline"><span class="icon" style="text-decoration:underline">S</span>Sublinhado</button>
-    <button class="sb-btn" data-cmd="strikeThrough"><span class="icon" style="text-decoration:line-through">S</span>Riscado</button>
-    <div class="sidebar-label">Títulos</div>
-    <button class="sb-btn" data-cmd="h1"><span class="icon">H1</span>Título 1</button>
-    <button class="sb-btn" data-cmd="h2"><span class="icon">H2</span>Título 2</button>
-    <button class="sb-btn" data-cmd="h3"><span class="icon">H3</span>Título 3</button>
-    <div class="sidebar-label">Blocos</div>
-    <button class="sb-btn" data-cmd="insertUnorderedList"><span class="icon">•</span>Lista</button>
-    <button class="sb-btn" data-cmd="insertOrderedList"><span class="icon">1.</span>Numerada</button>
-    <button class="sb-btn" data-cmd="blockquote"><span class="icon">"</span>Citação</button>
-    <button class="sb-btn" data-cmd="code"><span class="icon">&lt;/&gt;</span>Código</button>
-    <div class="sidebar-label">Inserir</div>
-    <button class="sb-btn" data-cmd="createLink"><span class="icon">🔗</span>Link</button>
-    <button class="sb-btn" data-cmd="hr"><span class="icon">—</span>Divisor</button>
-    <div class="sidebar-label">Exportar</div>
-    <button class="sb-btn" id="sb-docx"><span class="icon">📄</span>DOC</button>
-    <button class="sb-btn" id="sb-pdf"><span class="icon">📑</span>PDF</button>
-    <button class="sb-btn" id="sb-html"><span class="icon">💾</span>HTML</button>
-    <button class="sb-btn" id="sb-gdocs"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 10h8M8 14h5"/><path d="M14 2v5h6"/></svg></span>Docs</button>
+    <div id="sidebar-inner">
+
+      <!-- Font -->
+      <div class="sb-section-label">Fonte</div>
+      <select id="sb-fontsel">
+        <option value="font-serif">Serif (Times)</option>
+        <option value="font-sans">Sans (Anthropic)</option>
+        <option value="font-mono">Mono (Courier)</option>
+      </select>
+
+      <!-- Formatting -->
+      <div class="sb-section-label">Formatação</div>
+      <div class="sb-section" id="sec-fmt">
+        <button class="sb-btn" data-cmd="bold"><span class="ic" style="font-weight:800">B</span><span class="lbl">Negrito</span></button>
+        <button class="sb-btn" data-cmd="italic"><span class="ic" style="font-style:italic">I</span><span class="lbl">Itálico</span></button>
+        <button class="sb-btn" data-cmd="underline"><span class="ic" style="text-decoration:underline">S</span><span class="lbl">Sublinhado</span></button>
+        <button class="sb-btn" data-cmd="strikeThrough"><span class="ic" style="text-decoration:line-through">S</span><span class="lbl">Riscado</span></button>
+      </div>
+
+      <!-- Headings -->
+      <div class="sb-section-label">Títulos</div>
+      <div class="sb-section" id="sec-hd">
+        <button class="sb-btn" data-cmd="h1"><span class="ic">H1</span><span class="lbl">Título 1</span></button>
+        <button class="sb-btn" data-cmd="h2"><span class="ic">H2</span><span class="lbl">Título 2</span></button>
+        <button class="sb-btn" data-cmd="h3"><span class="ic">H3</span><span class="lbl">Título 3</span></button>
+      </div>
+
+      <!-- Blocks -->
+      <div class="sb-section-label">Blocos</div>
+      <div class="sb-section" id="sec-blk">
+        <button class="sb-btn" data-cmd="insertUnorderedList"><span class="ic">•</span><span class="lbl">Lista</span></button>
+        <button class="sb-btn" data-cmd="insertOrderedList"><span class="ic">1.</span><span class="lbl">Numerada</span></button>
+        <button class="sb-btn" data-cmd="blockquote"><span class="ic">"</span><span class="lbl">Citação</span></button>
+        <button class="sb-btn" data-cmd="code"><span class="ic">&lt;/&gt;</span><span class="lbl">Código</span></button>
+      </div>
+
+      <!-- Insert -->
+      <div class="sb-section-label">Inserir</div>
+      <div class="sb-section" id="sec-ins">
+        <button class="sb-btn" data-cmd="createLink"><span class="ic">🔗</span><span class="lbl">Link</span></button>
+        <button class="sb-btn" data-cmd="hr"><span class="ic">—</span><span class="lbl">Divisor</span></button>
+      </div>
+
+      <!-- Export -->
+      <div class="sb-section-label">Exportar</div>
+      <div class="sb-section" id="sec-exp">
+        <button class="sb-btn" id="sb-docx"><span class="ic">📄</span><span class="lbl">DOC</span></button>
+        <button class="sb-btn" id="sb-pdf"><span class="ic">📑</span><span class="lbl">PDF</span></button>
+        <button class="sb-btn" id="sb-html"><span class="ic">💾</span><span class="lbl">HTML</span></button>
+        <button class="sb-btn" id="sb-gdocs"><span class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 10h8M8 14h5"/><path d="M14 2v5h6"/></svg></span><span class="lbl">Docs</span></button>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- Floating toolbar -->
 <div id="toolbar">
   <button class="tb-btn" data-cmd="bold"><b>B</b></button>
   <button class="tb-btn" data-cmd="italic"><i>I</i></button>
@@ -436,13 +343,9 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
   <button class="tb-btn" data-cmd="h1" style="font-size:11px;font-weight:700">H1</button>
   <button class="tb-btn" data-cmd="h2" style="font-size:11px;font-weight:700">H2</button>
   <div class="tb-sep"></div>
-  <button class="tb-btn" data-cmd="insertUnorderedList">
-    <svg viewBox="0 0 16 16"><line x1="6" y1="4" x2="14" y2="4"/><line x1="6" y1="8" x2="14" y2="8"/><line x1="6" y1="12" x2="14" y2="12"/><circle cx="2.5" cy="4" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="8" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
-  </button>
+  <button class="tb-btn" data-cmd="insertUnorderedList"><svg viewBox="0 0 16 16"><line x1="6" y1="4" x2="14" y2="4"/><line x1="6" y1="8" x2="14" y2="8"/><line x1="6" y1="12" x2="14" y2="12"/><circle cx="2.5" cy="4" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="8" r="1" fill="currentColor" stroke="none"/><circle cx="2.5" cy="12" r="1" fill="currentColor" stroke="none"/></svg></button>
   <button class="tb-btn" data-cmd="blockquote" style="font-size:15px">"</button>
-  <button class="tb-btn" data-cmd="createLink">
-    <svg viewBox="0 0 16 16"><path d="M7 9a3.5 3.5 0 0 0 5 0l2-2a3.5 3.5 0 0 0-5-5L7.5 3.5"/><path d="M9 7a3.5 3.5 0 0 0-5 0L2 9a3.5 3.5 0 0 0 5 5l1.5-1.5"/></svg>
-  </button>
+  <button class="tb-btn" data-cmd="createLink"><svg viewBox="0 0 16 16"><path d="M7 9a3.5 3.5 0 0 0 5 0l2-2a3.5 3.5 0 0 0-5-5L7.5 3.5"/><path d="M9 7a3.5 3.5 0 0 0-5 0L2 9a3.5 3.5 0 0 0 5 5l1.5-1.5"/></svg></button>
 </div>
 
 <div id="modal-overlay">
@@ -459,40 +362,33 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 </div>
 
 <script>
-/* ── PRELOADED TEMPLATES ── */
+/* TEMPLATES */
 const TEMPLATES={
   blank:{title:'Sem título',html:''},
   notes:{title:'Notas',html:`<h1>Notas</h1><h2>Ideias</h2><p></p><h2>Tarefas</h2><ul><li></li></ul><h2>Referências</h2><p></p>`},
-  markdown:{title:'Guia Markdown',html:`<h1>Guia Markdown</h1><p>Uma referência rápida dos elementos mais comuns.</p><h2>Títulos</h2><pre><code># H1  ## H2  ### H3</code></pre><h2>Ênfase</h2><pre><code>**negrito**  *itálico*  ~~riscado~~</code></pre><h2>Listas</h2><pre><code>- item\n- item\n\n1. item\n2. item</code></pre><h2>Links e código</h2><pre><code>[texto](url)\n\`código inline\`</code></pre><h2>Citação</h2><blockquote>Texto citado</blockquote><hr><p>Edite à vontade!</p>`},
-  letter:{title:'Carta',html:`<p>[Cidade], [data]</p><p><br></p><p><strong>A/C:</strong> [Nome do destinatário]<br>[Cargo]<br>[Organização]</p><p><br></p><p>Prezado(a) [Nome],</p><p><br></p><p>Escrevo para [motivo da correspondência].</p><p><br></p><p>[Corpo da carta]</p><p><br></p><p>Atenciosamente,</p><p><br></p><p>[Seu nome]<br>[Cargo / Contato]</p>`}
+  markdown:{title:'Guia Markdown',html:`<h1>Guia Markdown</h1><p>Referência rápida dos elementos mais comuns.</p><h2>Títulos</h2><pre><code># H1  ## H2  ### H3</code></pre><h2>Ênfase</h2><pre><code>**negrito**  *itálico*  ~~riscado~~</code></pre><h2>Listas</h2><pre><code>- item\n1. item</code></pre><h2>Links e código</h2><pre><code>[texto](url)\n\`código\`</code></pre><h2>Citação</h2><blockquote>Texto citado</blockquote>`},
+  letter:{title:'Carta',html:`<p>[Cidade], [data]</p><p><br></p><p><strong>A/C:</strong> [Nome]<br>[Cargo]<br>[Organização]</p><p><br></p><p>Prezado(a) [Nome],</p><p><br></p><p>[Corpo da carta]</p><p><br></p><p>Atenciosamente,</p><p><br></p><p>[Seu nome]</p>`}
 };
 
-/* ── LOCAL STORAGE DOCS ── */
-const LS_PREFIX='editor_doc_';
-const LS_LIST='editor_doc_list';
-
+/* LOCAL STORAGE */
+const LS_PREFIX='editor_doc_',LS_LIST='editor_doc_list';
 function getDocList(){try{return JSON.parse(localStorage.getItem(LS_LIST)||'[]');}catch(e){return[];}}
 function saveDocList(l){try{localStorage.setItem(LS_LIST,JSON.stringify(l));}catch(e){}}
-
 function saveDoc(id,name,html){
   try{localStorage.setItem(LS_PREFIX+id,JSON.stringify({name,html,updated:Date.now()}));}catch(e){}
   const list=getDocList();
   if(!list.find(d=>d.id===id))list.unshift({id,name});
-  else{const i=list.findIndex(d=>d.id===id);list[i].name=name;}
+  else list[list.findIndex(d=>d.id===id)].name=name;
   saveDocList(list);
 }
 function loadDoc(id){try{const d=localStorage.getItem(LS_PREFIX+id);return d?JSON.parse(d):null;}catch(e){return null;}}
-function deleteDoc(id){
-  try{localStorage.removeItem(LS_PREFIX+id);}catch(e){}
-  saveDocList(getDocList().filter(d=>d.id!==id));
-}
+function deleteDoc(id){try{localStorage.removeItem(LS_PREFIX+id);}catch(e){}saveDocList(getDocList().filter(d=>d.id!==id));}
 function genId(){return'doc_'+Date.now()+'_'+Math.random().toString(36).slice(2,7);}
 
-/* ── STATE ── */
-let currentDocId=null;
-let mdMode=false,saveTimer=null,showLines=false;
+/* STATE */
+let currentDocId=null,mdMode=false,saveTimer=null,showLines=false;
 
-/* ── ELEMENTS ── */
+/* ELEMENTS */
 const editor=document.getElementById('editor');
 const toolbar=document.getElementById('toolbar');
 const sidebar=document.getElementById('sidebar');
@@ -508,129 +404,74 @@ const topbarReveal=document.getElementById('topbar-reveal');
 const homeEl=document.getElementById('home');
 const lineNumbers=document.getElementById('line-numbers');
 const editorWrap=document.getElementById('editor-wrap');
+const sbFontsel=document.getElementById('sb-fontsel');
 
-/* ── UTILS ── */
+/* UTILS */
 function showToast(msg,dur=2200){toast.textContent=msg;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),dur);}
 function openModal(html){modalContent.innerHTML=html;modalOverlay.classList.add('open');}
 function closeModal(){modalOverlay.classList.remove('open');}
 document.getElementById('modal-close-btn').addEventListener('click',closeModal);
 modalOverlay.addEventListener('click',e=>{if(e.target===modalOverlay)closeModal();});
 
-/* ── THEME ── */
-function applyTheme(){
-  try{if(localStorage.getItem('dark_mode')==='1')body.classList.add('dark');}catch(e){}
-}
+/* THEME */
+function applyTheme(){try{if(localStorage.getItem('dark_mode')==='1')body.classList.add('dark');}catch(e){}}
 applyTheme();
-
-function toggleDark(){
-  body.classList.toggle('dark');
-  try{localStorage.setItem('dark_mode',body.classList.contains('dark')?'1':'0');}catch(e){}
-}
+function toggleDark(){body.classList.toggle('dark');try{localStorage.setItem('dark_mode',body.classList.contains('dark')?'1':'0');}catch(e){}}
 document.getElementById('darkToggle').addEventListener('click',toggleDark);
 document.getElementById('home-dark').addEventListener('click',toggleDark);
 
-/* ── HOME ── */
+/* HOME */
 function renderLocalList(){
-  const list=getDocList();
-  const el=document.getElementById('local-list');
-  if(list.length===0){el.innerHTML='<div class="home-empty">Nenhum documento salvo ainda</div>';return;}
+  const list=getDocList(),el=document.getElementById('local-list');
+  if(!list.length){el.innerHTML='<div class="home-empty">Nenhum documento salvo ainda</div>';return;}
   el.innerHTML=list.map(d=>{
     const doc=loadDoc(d.id);
     const date=doc?new Date(doc.updated).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'';
-    return`<div class="doc-item" data-id="${d.id}">
-      <svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.6" style="flex-shrink:0;opacity:.5"><rect x="3" y="1" width="10" height="14" rx="1.5"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="9" y2="8"/></svg>
-      <div class="doc-item-info">
-        <div class="doc-item-name">${d.name||'Sem título'}</div>
-        <div class="doc-item-meta">${date}</div>
-      </div>
-      <button class="doc-item-del" data-del="${d.id}" title="Excluir">×</button>
-    </div>`;
+    return`<div class="doc-item" data-id="${d.id}"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.6" style="flex-shrink:0;opacity:.5"><rect x="3" y="1" width="10" height="14" rx="1.5"/><line x1="5" y1="5" x2="11" y2="5"/><line x1="5" y1="8" x2="9" y2="8"/></svg><div class="doc-item-info"><div class="doc-item-name">${d.name||'Sem título'}</div><div class="doc-item-meta">${date}</div></div><button class="doc-item-del" data-del="${d.id}">×</button></div>`;
   }).join('');
-
-  el.querySelectorAll('.doc-item').forEach(item=>{
-    item.addEventListener('click',e=>{
-      if(e.target.closest('[data-del]'))return;
-      openLocalDoc(item.dataset.id);
-    });
-  });
-  el.querySelectorAll('[data-del]').forEach(btn=>{
-    btn.addEventListener('click',e=>{
-      e.stopPropagation();
-      if(confirm('Excluir este documento?')){deleteDoc(btn.dataset.del);renderLocalList();}
-    });
-  });
+  el.querySelectorAll('.doc-item').forEach(item=>item.addEventListener('click',e=>{if(e.target.closest('[data-del]'))return;openLocalDoc(item.dataset.id);}));
+  el.querySelectorAll('[data-del]').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();if(confirm('Excluir este documento?')){deleteDoc(btn.dataset.del);renderLocalList();}}));
 }
-
-function showHome(){
-  homeEl.classList.remove('hidden');
-  renderLocalList();
-}
+function showHome(){homeEl.classList.remove('hidden');renderLocalList();}
 function hideHome(){homeEl.classList.add('hidden');editor.focus();}
-
 function openLocalDoc(id){
-  const doc=loadDoc(id);
-  if(!doc)return;
-  currentDocId=id;
-  editor.innerHTML=doc.html||'';
-  mdMode=false;
+  const doc=loadDoc(id);if(!doc)return;
+  currentDocId=id;editor.innerHTML=doc.html||'';mdMode=false;
   document.getElementById('mdToggle').classList.remove('active');
   countWords();hideHome();
 }
-
 function openTemplate(key){
-  const t=TEMPLATES[key];
-  currentDocId=null;
-  editor.innerHTML=t.html;
-  mdMode=false;
+  const t=TEMPLATES[key];currentDocId=null;editor.innerHTML=t.html;mdMode=false;
   document.getElementById('mdToggle').classList.remove('active');
   countWords();hideHome();
 }
-
-document.querySelectorAll('.pre-item').forEach(item=>{
-  item.addEventListener('click',()=>openTemplate(item.dataset.pre));
-});
+document.querySelectorAll('.pre-item').forEach(item=>item.addEventListener('click',()=>openTemplate(item.dataset.pre)));
 document.getElementById('home-new').addEventListener('click',()=>openTemplate('blank'));
-
-/* upload from home */
 document.getElementById('home-upload-btn').addEventListener('click',()=>document.getElementById('home-file-input').click());
 document.getElementById('home-file-input').addEventListener('change',function(){
   const file=this.files[0];if(!file)return;
   const reader=new FileReader();
-  reader.onload=e=>{
-    const content=e.target.result;
-    const isHtml=file.name.endsWith('.html');
-    editor.innerHTML=isHtml?content:mdToHtml(content);
-    mdMode=false;currentDocId=null;
-    countWords();hideHome();showToast(`"${file.name}" aberto ✓`);
-  };
+  reader.onload=e=>{editor.innerHTML=file.name.endsWith('.html')?e.target.result:mdToHtml(e.target.result);mdMode=false;currentDocId=null;countWords();hideHome();showToast(`"${file.name}" aberto ✓`);};
   reader.readAsText(file,'UTF-8');this.value='';
 });
-
 document.getElementById('btnHome').addEventListener('click',showHome);
 showHome();
 
-/* ── EDITOR CORE ── */
+/* EDITOR */
 function countWords(){
   const txt=editor.innerText||'';
   const words=txt.trim().split(/\s+/).filter(w=>w.length>0);
   wordcount.textContent=words.length===0?'0 palavras':`${words.length} palavra${words.length!==1?'s':''}`;
   statusRight.textContent=`${txt.replace(/\s/g,'').length} car.`;
 }
-
 function autoSave(){
   clearTimeout(saveTimer);statusLeft.textContent='…';
   saveTimer=setTimeout(()=>{
-    if(currentDocId){
-      const doc=loadDoc(currentDocId);
-      saveDoc(currentDocId,doc?doc.name:'Sem título',editor.innerHTML);
-    }
+    if(currentDocId){const doc=loadDoc(currentDocId);saveDoc(currentDocId,doc?doc.name:'Sem título',editor.innerHTML);}
     try{localStorage.setItem('editor_content',editor.innerHTML);}catch(e){}
-    statusLeft.textContent='Salvo';
-    setTimeout(()=>{statusLeft.textContent='Pronto';},1500);
+    statusLeft.textContent='Salvo';setTimeout(()=>{statusLeft.textContent='Pronto';},1500);
   },800);
 }
-
-/* manual save with name prompt */
 document.getElementById('btnSave').addEventListener('click',()=>{
   const doc=currentDocId?loadDoc(currentDocId):null;
   const name=prompt('Nome do documento:',doc?doc.name:'Sem título');
@@ -650,16 +491,14 @@ function execCmd(cmd){
   else{document.execCommand(cmd,false,null);}
   countWords();autoSave();
 }
-
 document.querySelectorAll('[data-cmd]').forEach(btn=>{
   btn.addEventListener('mousedown',e=>{e.preventDefault();execCmd(btn.dataset.cmd);});
   btn.addEventListener('touchend',e=>{e.preventDefault();execCmd(btn.dataset.cmd);});
 });
 
-/* keyboard shortcuts */
+/* KEYBOARD SHORTCUTS */
 editor.addEventListener('keydown',e=>{
-  const mod=e.ctrlKey||e.metaKey;
-  if(!mod)return;
+  const mod=e.ctrlKey||e.metaKey;if(!mod)return;
   const map={b:'bold',i:'italic',u:'underline'};
   if(map[e.key]){e.preventDefault();execCmd(map[e.key]);return;}
   if(e.key==='d'){e.preventDefault();execCmd('strikeThrough');return;}
@@ -671,7 +510,7 @@ editor.addEventListener('keydown',e=>{
   if(e.shiftKey&&e.key==='8'){e.preventDefault();execCmd('insertUnorderedList');return;}
 });
 
-/* floating toolbar */
+/* FLOATING TOOLBAR */
 function positionToolbar(){
   const sel=window.getSelection();
   if(!sel||sel.rangeCount===0||sel.isCollapsed){toolbar.classList.remove('visible');return;}
@@ -692,80 +531,85 @@ document.addEventListener('selectionchange',()=>{
 });
 document.addEventListener('mouseup',()=>setTimeout(positionToolbar,10));
 document.addEventListener('touchend',()=>setTimeout(positionToolbar,200));
-
 editor.addEventListener('keyup',()=>{countWords();autoSave();updateLineNumbers();});
 editor.addEventListener('input',()=>{countWords();autoSave();});
 editor.addEventListener('click',highlightActiveLine);
 editor.addEventListener('focus',highlightActiveLine);
 
-/* sidebar resize */
+/* SIDEBAR */
+document.getElementById('sidebarToggle').addEventListener('click',function(){sidebar.classList.toggle('open');this.classList.toggle('active');});
+
+/* SIDEBAR RESIZE */
 const sidebarResizer=document.getElementById('sidebar-resizer');
-const WIDE_THRESHOLD=210;
+const sections=['sec-fmt','sec-hd','sec-blk','sec-ins','sec-exp'];
+const COLS_THRESHOLDS=[{w:240,cols:3},{w:160,cols:2},{w:0,cols:2}];
+
+function updateSidebarCols(){
+  const w=sidebar.getBoundingClientRect().width;
+  const cols=COLS_THRESHOLDS.find(t=>w>=t.w).cols;
+  sections.forEach(id=>{
+    const sec=document.getElementById(id);
+    if(sec)sec.style.setProperty('--cols',cols);
+  });
+}
+
 let isResizing=false,startX=0,startW=0;
 sidebarResizer.addEventListener('mousedown',e=>{
-  isResizing=true;
-  startX=e.clientX;
-  startW=sidebar.getBoundingClientRect().width;
-  document.body.style.cursor='col-resize';
-  document.body.style.userSelect='none';
-  e.preventDefault();
-  e.stopPropagation();
+  isResizing=true;startX=e.clientX;startW=sidebar.getBoundingClientRect().width;
+  sidebarResizer.classList.add('active');
+  document.body.style.cursor='col-resize';document.body.style.userSelect='none';
+  e.preventDefault();e.stopPropagation();
 });
 document.addEventListener('mousemove',e=>{
   if(!isResizing)return;
-  const delta=startX-e.clientX;
-  const newW=Math.min(320,Math.max(120,startW+delta));
+  const newW=Math.min(340,Math.max(120,startW+(startX-e.clientX)));
   sidebar.style.width=newW+'px';
-  sidebar.classList.toggle('wide',newW>=WIDE_THRESHOLD);
+  updateSidebarCols();
 });
 document.addEventListener('mouseup',()=>{
   if(!isResizing)return;
-  isResizing=false;
-  document.body.style.cursor='';
-  document.body.style.userSelect='';
+  isResizing=false;sidebarResizer.classList.remove('active');
+  document.body.style.cursor='';document.body.style.userSelect='';
 });
 
-/* sidebar */
-document.getElementById('sidebarToggle').addEventListener('click',function(){sidebar.classList.toggle('open');this.classList.toggle('active');});
-
-/* font */
-document.getElementById('fontsel').addEventListener('change',function(){
+/* FONT */
+function applyFont(val){
   body.className=body.className.replace(/font-\w+/g,'').trim();
-  body.classList.add(this.value);
-  try{localStorage.setItem('editor_font',this.value);}catch(e){}
-});
-try{const f=localStorage.getItem('editor_font');if(f){body.className=body.className.replace(/font-\w+/g,'').trim();body.classList.add(f);document.getElementById('fontsel').value=f;}}catch(e){}
+  body.classList.add(val);
+  sbFontsel.value=val;
+  try{localStorage.setItem('editor_font',val);}catch(e){}
+}
+sbFontsel.addEventListener('change',()=>applyFont(sbFontsel.value));
+try{const f=localStorage.getItem('editor_font');if(f)applyFont(f);}catch(e){}
 
-/* markdown toggle */
+/* MARKDOWN */
 document.getElementById('mdToggle').addEventListener('click',function(){
   mdMode=!mdMode;this.classList.toggle('active',mdMode);
   if(mdMode){editor.innerText=htmlToMd(editor.innerHTML);}else{editor.innerHTML=mdToHtml(editor.innerText);}
   countWords();
 });
 
-/* topbar hide/show */
+/* TOPBAR */
 document.getElementById('topbarToggle').addEventListener('click',()=>{topbar.style.display='none';topbarReveal.style.display='block';});
 topbarReveal.addEventListener('click',()=>{topbar.style.display='';topbarReveal.style.display='none';});
 
-/* upload in editor */
+/* UPLOAD in editor */
 document.getElementById('btnUpload').addEventListener('click',()=>document.getElementById('fileInput').click());
 document.getElementById('fileInput').addEventListener('change',function(){
   const file=this.files[0];if(!file)return;
   const reader=new FileReader();
   reader.onload=e=>{
-    const isHtml=file.name.endsWith('.html');
-    if(mdMode){editor.innerText=e.target.result;}else{editor.innerHTML=isHtml?e.target.result:mdToHtml(e.target.result);}
+    if(mdMode){editor.innerText=e.target.result;}else{editor.innerHTML=file.name.endsWith('.html')?e.target.result:mdToHtml(e.target.result);}
     currentDocId=null;countWords();autoSave();showToast(`"${file.name}" aberto ✓`);
   };
   reader.readAsText(file,'UTF-8');this.value='';
 });
 
-/* line numbers */
+/* LINE NUMBERS */
 function updateLineNumbers(){
   if(!showLines)return;
   const lines=editor.innerText.split('\n');
-  const count=Math.max(lines.length,1);
-  lineNumbers.innerHTML=Array.from({length:count},(_,i)=>`<span>${i+1}</span>`).join('');
+  lineNumbers.innerHTML=Array.from({length:Math.max(lines.length,1)},(_,i)=>`<span>${i+1}</span>`).join('');
   highlightActiveLine();
 }
 function highlightActiveLine(){
@@ -774,10 +618,10 @@ function highlightActiveLine(){
   if(!sel||!editor.contains(sel.anchorNode))return;
   const range=sel.getRangeAt(0).cloneRange();range.collapse(true);
   const rect=range.getBoundingClientRect();
-  const editorRect=editor.getBoundingClientRect();
+  const eRect=editor.getBoundingClientRect();
   const lineH=parseInt(getComputedStyle(editor).lineHeight)||Math.round(17*1.75);
-  const lineIdx=Math.max(0,Math.floor((rect.top-editorRect.top)/lineH));
-  lineNumbers.querySelectorAll('span').forEach((s,i)=>s.classList.toggle('active',i===lineIdx));
+  const idx=Math.max(0,Math.floor((rect.top-eRect.top)/lineH));
+  lineNumbers.querySelectorAll('span').forEach((s,i)=>s.classList.toggle('active',i===idx));
 }
 document.getElementById('lineToggle').addEventListener('click',function(){
   showLines=!showLines;this.classList.toggle('active',showLines);
@@ -785,7 +629,7 @@ document.getElementById('lineToggle').addEventListener('click',function(){
   if(showLines)updateLineNumbers();
 });
 
-/* ── MD CONVERSIONS ── */
+/* MD CONVERSIONS */
 function mdToHtml(md){
   if(!md)return'';
   let h=md.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -822,22 +666,14 @@ function htmlToMd(html){
   return Array.from(d.childNodes).map(walk).join('').replace(/\n{3,}/g,'\n\n').trim();
 }
 
-/* ── EXPORT ── */
+/* EXPORT */
 function getCurrentFont(){
   if(body.classList.contains('font-sans'))return"'Anthropic Sans',Helvetica,Arial,sans-serif";
   if(body.classList.contains('font-mono'))return"'Courier New',Courier,monospace";
   return"'Times New Roman',Times,Georgia,serif";
 }
 function buildFullHtml(){
-  return`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>
-body{font-family:${getCurrentFont()};font-size:17px;line-height:1.75;max-width:720px;margin:60px auto;padding:0 40px;color:#1a1a1a;}
-h1{font-size:2em;font-weight:700;margin:1.2em 0 .4em}h2{font-size:1.5em;font-weight:700;margin:1em 0 .35em}h3{font-size:1.2em;font-weight:600;margin:.9em 0 .3em}
-blockquote{border-left:3px solid #e0e0e0;margin:.6em 0;padding:.3em 1em;color:#888}
-code{font-family:'Courier New',monospace;font-size:.88em;background:#f7f7f5;border:1px solid #e0e0e0;border-radius:4px;padding:1px 5px}
-pre{background:#f7f7f5;border:1px solid #e0e0e0;border-radius:8px;padding:1em;overflow-x:auto}
-pre code{background:none;border:none;padding:0}hr{border:none;border-top:1px solid #e0e0e0;margin:1.5em 0}
-ul,ol{padding-left:1.6em}a{color:#3a7bd5}
-</style></head><body>${editor.innerHTML}</body></html>`;
+  return`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><style>body{font-family:${getCurrentFont()};font-size:17px;line-height:1.75;max-width:720px;margin:60px auto;padding:0 40px;color:#1a1a1a}h1{font-size:2em;font-weight:700;margin:1.2em 0 .4em}h2{font-size:1.5em;font-weight:700;margin:1em 0 .35em}h3{font-size:1.2em;font-weight:600;margin:.9em 0 .3em}blockquote{border-left:3px solid #e0e0e0;margin:.6em 0;padding:.3em 1em;color:#888}code{font-family:'Courier New',monospace;font-size:.88em;background:#f7f7f5;border:1px solid #e0e0e0;border-radius:4px;padding:1px 5px}pre{background:#f7f7f5;border:1px solid #e0e0e0;border-radius:8px;padding:1em;overflow-x:auto}pre code{background:none;border:none;padding:0}hr{border:none;border-top:1px solid #e0e0e0;margin:1.5em 0}ul,ol{padding-left:1.6em}a{color:#3a7bd5}</style></head><body>${editor.innerHTML}</body></html>`;
 }
 function downloadHtml(){const blob=new Blob([buildFullHtml()],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='documento.html';a.click();showToast('HTML baixado ✓');closeModal();}
 function downloadPdf(){const w=window.open('','_blank');if(!w){showToast('Permita pop-ups para exportar PDF');return;}w.document.write(buildFullHtml());w.document.close();w.onload=()=>w.print();showToast('Salve como PDF na caixa de impressão');closeModal();}
@@ -847,24 +683,13 @@ function downloadDocx(){
   const blob=new Blob([rtf],{type:'application/msword'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='documento.doc';a.click();showToast('Documento baixado ✓');closeModal();
 }
 function showDownloadModal(){
-  openModal(`<h3>Baixar documento</h3><p>Escolha o formato:</p><div class="modal-actions">
-    <button class="modal-btn" id="dl-pdf"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="2" y="1" width="12" height="14" rx="2"/><path d="M5 6h6M5 9h4"/></svg>PDF — via impressão</button>
-    <button class="modal-btn" id="dl-docx"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="2" y="1" width="12" height="14" rx="2"/><path d="M5 6h6M5 9h6M5 12h3"/></svg>DOC — Word / Google Docs</button>
-    <button class="modal-btn" id="dl-html"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><polyline points="4 6 2 8 4 10"/><polyline points="12 6 14 8 12 10"/><line x1="9" y1="4" x2="7" y2="12"/></svg>HTML</button>
-  </div>`);
+  openModal(`<h3>Baixar documento</h3><p>Escolha o formato:</p><div class="modal-actions"><button class="modal-btn" id="dl-pdf"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="2" y="1" width="12" height="14" rx="2"/><path d="M5 6h6M5 9h4"/></svg>PDF — via impressão</button><button class="modal-btn" id="dl-docx"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="2" y="1" width="12" height="14" rx="2"/><path d="M5 6h6M5 9h6M5 12h3"/></svg>DOC — Word / Google Docs</button><button class="modal-btn" id="dl-html"><svg width="16" height="16" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><polyline points="4 6 2 8 4 10"/><polyline points="12 6 14 8 12 10"/><line x1="9" y1="4" x2="7" y2="12"/></svg>HTML</button></div>`);
   document.getElementById('dl-pdf').addEventListener('click',downloadPdf);
   document.getElementById('dl-docx').addEventListener('click',downloadDocx);
   document.getElementById('dl-html').addEventListener('click',downloadHtml);
 }
 function showGdocsModal(){
-  openModal(`<h3>Exportar para Google Docs</h3><p>Siga os passos:</p>
-    <div class="modal-step"><div class="modal-step-num">1</div><span style="font-size:13px;line-height:1.5">Baixe o arquivo <b>.doc</b> abaixo</span></div>
-    <div class="modal-step"><div class="modal-step-num">2</div><span style="font-size:13px;line-height:1.5">Acesse <a href="https://drive.google.com" target="_blank" style="color:#3a7bd5">drive.google.com</a> → <b>Novo → Upload de arquivo</b></span></div>
-    <div class="modal-step"><div class="modal-step-num">3</div><span style="font-size:13px;line-height:1.5">Clique duas vezes no arquivo → <b>Abrir com Google Docs</b></span></div>
-    <div class="modal-actions" style="margin-top:18px">
-      <button class="modal-btn" id="gdocs-cancel">Cancelar</button>
-      <button class="modal-btn primary" id="gdocs-download"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 2v8M5 7l3 3 3-3M3 12h10"/></svg>Baixar .doc</button>
-    </div>`);
+  openModal(`<h3>Exportar para Google Docs</h3><p>Siga os passos:</p><div class="modal-step"><div class="modal-step-num">1</div><span style="font-size:13px;line-height:1.5">Baixe o arquivo <b>.doc</b> abaixo</span></div><div class="modal-step"><div class="modal-step-num">2</div><span style="font-size:13px;line-height:1.5">Acesse <a href="https://drive.google.com" target="_blank" style="color:#3a7bd5">drive.google.com</a> → <b>Novo → Upload de arquivo</b></span></div><div class="modal-step"><div class="modal-step-num">3</div><span style="font-size:13px;line-height:1.5">Clique duas vezes no arquivo → <b>Abrir com Google Docs</b></span></div><div class="modal-actions" style="margin-top:18px"><button class="modal-btn" id="gdocs-cancel">Cancelar</button><button class="modal-btn primary" id="gdocs-download"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M8 2v8M5 7l3 3 3-3M3 12h10"/></svg>Baixar .doc</button></div>`);
   document.getElementById('gdocs-cancel').addEventListener('click',closeModal);
   document.getElementById('gdocs-download').addEventListener('click',downloadDocx);
 }
@@ -876,6 +701,7 @@ document.getElementById('sb-html').addEventListener('mousedown',e=>{e.preventDef
 document.getElementById('sb-gdocs').addEventListener('mousedown',e=>{e.preventDefault();showGdocsModal();});
 
 countWords();
+updateSidebarCols();
 </script>
 </body>
 </html>
