@@ -70,8 +70,19 @@ body{display:flex;flex-direction:column;background:var(--bg);color:var(--text);f
 #topbar-reveal:hover{background:var(--muted)}
 
 body.dark #sidebar{box-shadow:0 2px 16px rgba(0,0,0,0.3);}
-#main{display:flex;flex:1;overflow:hidden;position:relative;align-items:stretch}
-#editor-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;justify-content:center;position:relative}
+/* MAIN */
+#main{display:flex;flex:1;overflow:hidden;position:relative}
+/* STATUS */
+#status{
+  position:fixed;bottom:0;left:0;right:0;
+  height:var(--status-h);z-index:50;
+  font-size:11px;color:var(--muted);
+  padding:0 16px;
+  border-top:1px solid var(--border);
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:space-between;
+}
+#editor-wrap{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;justify-content:center;position:relative;padding-bottom:var(--status-h)}
 
 /* LINE NUMBERS */
 #line-numbers{position:absolute;left:0;top:0;bottom:0;width:40px;padding:40px 0 100px;display:none;flex-direction:column;align-items:flex-end;pointer-events:none;font-size:12px;line-height:1.75;color:var(--muted);font-family:'Courier New',Courier,monospace;user-select:none}
@@ -111,8 +122,7 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
   display:none;flex-direction:column;
   order:2;position:relative;
   width:160px;min-width:120px;max-width:340px;
-  /* detached look */
-  margin:10px 10px 10px 0;
+  margin:10px 10px calc(var(--status-h) + 10px) 0;
   background:var(--sidebar-bg);
   border:1px solid var(--border);
   border-radius:14px;
@@ -376,8 +386,7 @@ body.font-mono #line-numbers span{height:calc(15px * 1.8)}
 <div id="toast"></div>
 <div id="status">
   <span id="statusLeft">Pronto</span>
-  <span id="wordcount">0 palavras</span>
-  <span id="statusRight"></span>
+  <span id="wordcount">0 palavras · 0 car.</span>
 </div>
 
 <script>
@@ -480,8 +489,9 @@ showHome();
 function countWords(){
   const txt=editor.innerText||'';
   const words=txt.trim().split(/\s+/).filter(w=>w.length>0);
-  wordcount.textContent=words.length===0?'0 palavras':`${words.length} palavra${words.length!==1?'s':''}`;
-  statusRight.textContent=`${txt.replace(/\s/g,'').length} car.`;
+  const chars=txt.replace(/\s/g,'').length;
+  const wLabel=words.length===1?'palavra':'palavras';
+  wordcount.textContent=`${words.length} ${wLabel} · ${chars} car.`;
 }
 function autoSave(){
   clearTimeout(saveTimer);statusLeft.textContent='…';
