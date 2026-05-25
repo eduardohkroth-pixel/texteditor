@@ -509,8 +509,7 @@ function setMsbCollapsed(on){
   msbCollapsed=on;
   mainSidebar.style.display=on?'none':'';
   msbShowTab.style.display=on?'flex':'none';
-  // Keep content-area gaps consistent with right side padding
-  // Body gap is between flex children; when sidebar hidden, add margin-left to content-area to match right padding
+  body.style.paddingLeft=on?'0':'';
   document.getElementById('content-area').style.marginLeft=on?'0':'';
   try{localStorage.setItem('msb_collapsed',on?'1':'0');}catch(e){}
 }
