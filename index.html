@@ -316,9 +316,10 @@ body.dark .home-icon-btn:hover{background:#2a2a28;color:#e8e8e4}
           <button class="sb-btn" id="notebookToggle"><span class="ic"><svg width="14" height="14" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="1.8"><rect x="1" y="2" width="14" height="12" rx="1.5"/><line x1="3" y1="6" x2="13" y2="6"/><line x1="3" y1="9" x2="13" y2="9"/></svg></span><span class="lbl">Caderno</span></button>
         </div>
         <div class="sb-section-label">Largura</div>
-        <div style="padding:4px 4px 8px;width:100%">
-          <input type="range" id="widthSlider" min="400" max="9999" value="9999" step="10" style="width:100%;accent-color:var(--accent);cursor:pointer">
-          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:2px;padding:0 2px"><span>Estreito</span><span>Largo</span></div>
+        <div class="sb-section" id="sec-width" style="grid-template-columns:repeat(3,1fr)">
+          <button class="sb-btn" id="width-narrow"><span class="ic" style="font-size:10px;letter-spacing:-.5px">Est</span><span class="lbl">Estreito</span></button>
+          <button class="sb-btn" id="width-default"><span class="ic" style="font-size:10px">Pad</span><span class="lbl">Padrão</span></button>
+          <button class="sb-btn" id="width-wide"><span class="ic" style="font-size:10px">Lar</span><span class="lbl">Largo</span></button>
         </div>
         <div class="sb-section-label">Exportar</div>
         <div class="sb-section" id="sec-exp">
@@ -708,15 +709,19 @@ document.getElementById('notebookToggle').addEventListener('mousedown',function(
 });
 try{if(localStorage.getItem('notebook_lines')==='1'){editor.classList.add('notebook-lines');document.getElementById('notebookToggle').classList.add('active');setTimeout(applyNotebookLines,150);}}catch(e){}
 
-// Width slider
-const widthSlider=document.getElementById('widthSlider');
-function applyEditorWidth(val){
-  editor.style.maxWidth=parseInt(val)>=9990?'100%':val+'px';
-  try{localStorage.setItem('editor_width',val);}catch(e){}
+// Width buttons
+const WIDTH_MAP={narrow:'560px',default:'720px',wide:'100%'};
+function applyEditorWidth(key){
+  editor.style.maxWidth=WIDTH_MAP[key];
+  document.querySelectorAll('#sec-width .sb-btn').forEach(b=>b.classList.toggle('active',b.id==='width-'+key));
+  try{localStorage.setItem('editor_width',key);}catch(e){}
   requestAnimationFrame(applyNotebookLines);
 }
-widthSlider.addEventListener('input',()=>applyEditorWidth(widthSlider.value));
-try{const w=localStorage.getItem('editor_width');if(w){widthSlider.value=w;applyEditorWidth(w);}}catch(e){}
+['narrow','default','wide'].forEach(k=>{
+  const btn=document.getElementById('width-'+k);
+  if(btn)btn.addEventListener('click',()=>applyEditorWidth(k));
+});
+try{applyEditorWidth(localStorage.getItem('editor_width')||'wide');}catch(e){applyEditorWidth('wide');}
 
 // MD conversions
 function mdToHtml(md){
