@@ -509,6 +509,8 @@ function setMsbCollapsed(on){
   msbCollapsed=on;
   mainSidebar.style.display=on?'none':'';
   msbShowTab.style.display=on?'flex':'none';
+  body.style.paddingLeft=on?'var(--gap)':'';
+  body.style.gap=on?'0':'';
   try{localStorage.setItem('msb_collapsed',on?'1':'0');}catch(e){}
 }
 document.getElementById('msb-collapse').addEventListener('click',()=>setMsbCollapsed(true));
@@ -546,27 +548,32 @@ function applyTheme(id){
 function openPicker(){
   const r=document.getElementById('msb-theme').getBoundingClientRect();
   themePicker.style.display='flex';
-  // position to the right of the button
   const left=r.right+8;
   themePicker.style.left=left+'px';
   themePicker.style.top='auto';
   themePicker.style.bottom='auto';
-  // measure after display
   const ph=themePicker.offsetHeight;
   const pw=themePicker.offsetWidth;
-  // vertical: align with button, clamp to viewport
   let top=r.top;
-  if(top+ph>window.innerHeight-8) top=window.innerHeight-ph-8;
-  if(top<8) top=8;
-  // horizontal: if goes off right edge, flip to left
-  if(left+pw>window.innerWidth-8) themePicker.style.left=(r.left-pw-8)+'px';
+  if(top+ph>window.innerHeight-8)top=window.innerHeight-ph-8;
+  if(top<8)top=8;
+  if(left+pw>window.innerWidth-8)themePicker.style.left=(r.left-pw-8)+'px';
   themePicker.style.top=top+'px';
   themePicker.classList.add('open');
   document.getElementById('msb-theme').classList.add('active');
 }
-function closePicker(){themePicker.classList.remove('open');document.getElementById('msb-theme').classList.remove('active');}
-document.getElementById('msb-theme').addEventListener('click',e=>{e.stopPropagation();themePicker.classList.contains('open')?closePicker():openPicker();});
-document.addEventListener('click',e=>{if(!themePicker.contains(e.target)&&e.target.id!=='msb-theme')closePicker();});
+function closePicker(){
+  themePicker.classList.remove('open');
+  themePicker.style.display='';
+  document.getElementById('msb-theme').classList.remove('active');
+}
+function togglePicker(){
+  themePicker.classList.contains('open')?closePicker():openPicker();
+}
+document.getElementById('msb-theme').addEventListener('click',e=>{e.stopPropagation();togglePicker();});
+document.addEventListener('click',e=>{
+  if(themePicker.classList.contains('open')&&!themePicker.contains(e.target))closePicker();
+});
 try{applyTheme(localStorage.getItem('app_theme')||'default');}catch(e){applyTheme('default');}
 
 function toggleDark(){const isDark=body.classList.contains('dark');applyTheme(isDark?'default':'dark');}
