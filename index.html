@@ -12,7 +12,7 @@
   --btn-hover:#ebebeb;--accent:#1a1a1a;
   --panel-bg:#f5f5f5;--panel-border:#e0e0e0;
   --panel-shadow:0 2px 12px rgba(0,0,0,0.06);
-  --panel-radius:14px;
+  --panel-radius:7px;
   --font-ui:'Anthropic Sans',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
   --gap:10px;--status-h:32px;--msb-w:44px;
 }
@@ -24,7 +24,7 @@ body.theme-forest{--bg:#1e2d1f;--panel-bg:#f4f0e6;--panel-border:#d8d0bc;--panel
 body.theme-dusk{--bg:#1e1428;--panel-bg:#f0ecf8;--panel-border:#d4c8ec;--panel-shadow:0 2px 16px rgba(0,0,0,.4);--surface:#e6dff4;--text:#1a0f2e;--muted:#8070a8;--border:#d4c8ec;--btn-hover:#dcd4f0;--accent:#1a0f2e;}
 body.theme-rose{--bg:#8c4a5a;--panel-bg:#fff8f4;--panel-border:#f0d8cc;--panel-shadow:0 2px 14px rgba(80,20,30,.2);--surface:#faeee6;--text:#2a1018;--muted:#a07070;--border:#f0d8cc;--btn-hover:#f4e2d8;--accent:#2a1018;}
 html,body{height:100%;overflow:hidden}
-body{display:flex;flex-direction:row;background:var(--bg);color:var(--text);font-family:var(--font-ui);transition:background .2s,color .2s;padding:var(--gap);gap:var(--gap);padding-bottom:calc(var(--status-h) + var(--gap)*2);}
+body{display:flex;flex-direction:row;background:var(--bg);color:var(--text);font-family:var(--font-ui);transition:background .2s,color .2s;padding:var(--gap);gap:var(--gap);}
 .panel{background:var(--panel-bg);border:1px solid var(--panel-border);border-radius:var(--panel-radius);box-shadow:var(--panel-shadow);}
 
 /* MAIN SIDEBAR */
@@ -61,7 +61,7 @@ body{display:flex;flex-direction:row;background:var(--bg);color:var(--text);font
 .outline-empty{font-size:11px;color:var(--muted);padding:4px 6px;}
 
 /* EDITOR WRAP */
-#editor-wrap{flex:1;overflow-y:auto;display:flex;justify-content:center;position:relative;min-height:0;}
+#editor-wrap{flex:1;overflow-y:auto;display:flex;flex-direction:column;justify-content:flex-start;position:relative;min-height:0;}
 #editor-wrap::-webkit-scrollbar{width:3px}
 #editor-wrap::-webkit-scrollbar-thumb{background:var(--panel-border);border-radius:99px}
 
@@ -74,7 +74,7 @@ body.font-mono #line-numbers span{height:calc(15px*1.8)}
 #editor-wrap.with-lines #editor{padding-left:52px}
 
 /* EDITOR */
-#editor{width:100%;max-width:var(--editor-max-width,100%);min-height:100%;padding:40px 40px 80px;outline:none;font-size:17px;line-height:1.75;color:var(--text);caret-color:var(--text);word-break:break-word;margin:0 auto;}
+#editor{width:100%;max-width:var(--editor-max-width,100%);min-height:calc(100% - 52px);padding:40px 40px 0;outline:none;font-size:17px;line-height:1.75;color:var(--text);caret-color:var(--text);word-break:break-word;margin:0 auto;flex-shrink:0;}
 #editor[data-placeholder]:empty::before{content:attr(data-placeholder);color:var(--muted);pointer-events:none}
 .font-serif #editor{font-family:'Times New Roman','Times',Georgia,serif}
 .font-sans #editor{font-family:'Anthropic Sans',Helvetica,Arial,sans-serif}
@@ -131,8 +131,20 @@ body.font-mono #line-numbers span{height:calc(15px*1.8)}
 .theme-swatch{width:28px;height:18px;border-radius:5px;flex-shrink:0;overflow:hidden;display:flex;border:1px solid rgba(0,0,0,0.1);}
 .swatch-bg{flex:1}.swatch-panel{width:9px}
 
-/* STATUS */
-#status{position:fixed;bottom:var(--gap);left:var(--gap);right:var(--gap);height:var(--status-h);z-index:50;font-size:11px;color:var(--muted);padding:0 16px;display:flex;align-items:center;justify-content:space-between;}
+/* STATUS — inline at bottom of editor */
+#editor-status{
+  padding:16px 40px 24px;
+  display:flex;justify-content:space-between;
+  font-size:10px;color:var(--muted);
+  font-family:var(--font-ui);
+  opacity:.6;
+  flex-shrink:0;
+  pointer-events:none;
+  user-select:none;
+  width:100%;
+  max-width:var(--editor-max-width,100%);
+  margin:0 auto;
+}
 
 /* MODAL */
 #modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:2000;display:none;align-items:flex-end;justify-content:center}
@@ -152,7 +164,7 @@ body.font-mono #line-numbers span{height:calc(15px*1.8)}
 .modal-step-num{width:22px;height:22px;border-radius:50%;background:var(--surface);border:1px solid var(--panel-border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
 
 /* TOAST */
-#toast{position:fixed;bottom:calc(var(--status-h)+var(--gap)*2+8px);left:50%;transform:translateX(-50%) translateY(12px);background:var(--accent);color:var(--bg);padding:9px 18px;border-radius:10px;font-size:13px;opacity:0;transition:all .25s;z-index:3000;pointer-events:none;white-space:nowrap}
+#toast{position:fixed;bottom:calc(var(--gap)*2+8px);left:50%;transform:translateX(-50%) translateY(12px);background:var(--accent);color:var(--bg);padding:9px 18px;border-radius:10px;font-size:13px;opacity:0;transition:all .25s;z-index:3000;pointer-events:none;white-space:nowrap}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* MOBILE */
@@ -280,6 +292,10 @@ body.dark .home-icon-btn:hover{background:#2a2a28;color:#e8e8e4}
       <div id="line-numbers"></div>
       <button id="msb-show-btn" title="Mostrar barra"><svg width="13" height="13" viewBox="0 0 16 16" stroke="currentColor" fill="none" stroke-width="2"><polyline points="6 4 10 8 6 12"/></svg></button>
       <div id="editor" contenteditable="true" spellcheck="true" data-placeholder="Comece a escrever…"></div>
+      <div id="editor-status">
+        <span id="statusLeft">Pronto</span>
+        <span id="wordcount">0 palavras · 0 car.</span>
+      </div>
     </div>
     <div id="sidebar" class="panel">
       <div id="sidebar-resizer"></div>
@@ -356,10 +372,7 @@ body.dark .home-icon-btn:hover{background:#2a2a28;color:#e8e8e4}
   </div>
 </div>
 <div id="toast"></div>
-<div id="status" class="panel">
-  <span id="statusLeft">Pronto</span>
-  <span id="wordcount">0 palavras · 0 car.</span>
-</div>
+
 
 <script>
 (function(){
